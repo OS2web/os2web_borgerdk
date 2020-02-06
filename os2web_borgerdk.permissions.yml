@@ -1,0 +1,17 @@
+access os2web_borgerdk content overview:
+  title: 'Access Borger.dk content overview page'
+administer os2web_borgerdk content:
+  title: 'Administer Borger.dk content'
+  restrict access: true
+administer os2web_borgerdk configuration:
+  title: 'Administer Borger.dk configuration'
+  restrict access: true
+view os2web_borgerdk content:
+  title: View Borger.dk content
+create os2web_borgerdk content:
+  title: Create Borger.dk content
+edit own os2web_borgerdk content:
+  title: Edit own Borger.dk content
+delete own os2web_borgerdk content:
+  title: Delete own Borger.dk content
+

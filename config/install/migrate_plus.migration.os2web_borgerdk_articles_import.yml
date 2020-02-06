@@ -1,0 +1,47 @@
+id: os2web_borgerdk_articles_import
+migration_tags:
+  - borgerdk
+label: 'Borger.dk Articles Import'
+migration_group: os2web_borgerdk
+source:
+  plugin: os2web_borgerdk_article
+  track_changes: true
+  source_languages:
+    - da
+    - en
+process:
+  borgerdk_id: id
+  title: title
+  header: header
+  articleUrl: url
+  lastUpdated:
+    plugin: format_date
+    from_format: 'Y-m-d\TH:i:s'
+    from_timezone: 'Europe/Copenhagen'
+    to_format: 'U'
+    source: lastUpdated
+  publishingDate:
+    plugin: format_date
+    from_format: 'Y-m-d\TH:i:s'
+    from_timezone: 'Europe/Copenhagen'
+    to_format: 'U'
+    source: publishDate
+  legislation/value: legislation
+  legislation/format:
+    plugin: default_value
+    default_value: basic_html
+  recommendation/value: recommendation
+  recommendation/format:
+    plugin: default_value
+    default_value: basic_html
+  byline: byline
+  uid:
+    plugin: default_value
+    default_value: 0
+  lang: lang
+  municipality_code: municipalityCode
+destination:
+  plugin: 'entity:os2web_borgerdk_article'
+migration_dependencies:
+  required: {  }
+  optional: {  }

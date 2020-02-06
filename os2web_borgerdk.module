@@ -1,0 +1,141 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for os2web_borgerdk module.
+ */
+
+use Drupal\Core\Render\Element;
+
+/**
+ * Implements hook_theme().
+ */
+function os2web_borgerdk_theme() {
+  return [
+    'os2web_borgerdk_article' => [
+      'render element' => 'elements',
+    ],
+    'os2web_borgerdk_microarticle' => [
+      'render element' => 'elements',
+    ],
+    'os2web_borgerdk_selfservice' => [
+      'render element' => 'elements',
+    ],
+  ];
+}
+
+/**
+ * Prepares variables for os2web_borgerdk_article templates.
+ *
+ * Default template: os2web-borgerdk-article.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An associative array containing the os2web_borgerdk_article
+ *     information and any fields attached to the entity.
+ *   - attributes: HTML attributes for the containing element.
+ *   - view_mode: View mode; e.g., 'full', 'field_reference', etc.
+ */
+function template_preprocess_os2web_borgerdk_article(array &$variables) {
+  foreach (Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+  $variables['view_mode'] = $variables['elements']['#view_mode'];
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function os2web_borgerdk_theme_suggestions_os2web_borgerdk_article(array $variables) {
+  $suggestions = [];
+  $article = $variables['elements']['#os2web_borgerdk_article'];
+  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+
+  $suggestions[] = 'os2web_borgerdk-article__' . $sanitized_view_mode;
+  $suggestions[] = 'os2web_borgerdk-article__' . $article->id();
+  $suggestions[] = 'os2web_borgerdk-article__' . $article->id() . '__' . $sanitized_view_mode;
+
+  return $suggestions;
+}
+
+/**
+ * Prepares variables for borger.dk microarticle templates.
+ *
+ * Default template: os2web-borgerdk-microarticle.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An associative array containing the borger.dk microarticle
+ *     information and any fields attached to the entity.
+ *   - attributes: HTML attributes for the containing element.
+ *   - view_mode: View mode; e.g., 'full', 'field_reference', etc.
+ */
+function template_preprocess_os2web_borgerdk_microarticle(array &$variables) {
+  foreach (Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+  $variables['view_mode'] = $variables['elements']['#view_mode'];
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function os2web_borgerdk_theme_suggestions_os2web_borgerdk_microarticle(array $variables) {
+  $suggestions = [];
+  $microarticle = $variables['elements']['#os2web_borgerdk_microarticle'];
+  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+
+  $suggestions[] = 'os2web_borgerdk_microarticle__' . $sanitized_view_mode;
+  $suggestions[] = 'os2web_borgerdk_microarticle__' . $microarticle->id();
+  $suggestions[] = 'os2web_borgerdk_microarticle__' . $microarticle->id() . '__' . $sanitized_view_mode;
+
+  return $suggestions;
+}
+
+/**
+ * Prepares variables for borger.dk selfservice templates.
+ *
+ * Default template: os2web-borgerdk-selfservice.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An associative array containing the borger.dk selfservice
+ *     information and any fields attached to the entity.
+ *   - attributes: HTML attributes for the containing element.
+ *   - view_mode: View mode; e.g., 'full', 'field_reference', etc.
+ */
+function template_preprocess_os2web_borgerdk_selfservice(array &$variables) {
+  foreach (Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+  $variables['view_mode'] = $variables['elements']['#view_mode'];
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function os2web_borgerdk_theme_suggestions_os2web_borgerdk_selfservice(array $variables) {
+  $suggestions = [];
+  $microarticle = $variables['elements']['#os2web_borgerdk_selfservice'];
+  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+
+  $suggestions[] = 'os2web_borgerdk_selfservice__' . $sanitized_view_mode;
+  $suggestions[] = 'os2web_borgerdk_selfservice__' . $microarticle->id();
+  $suggestions[] = 'os2web_borgerdk_selfservice__' . $microarticle->id() . '__' . $sanitized_view_mode;
+
+  return $suggestions;
+}
+
+/**
+ * Implements hook_mail().
+ */
+function os2web_borgerdk_mail($key, &$message, $params) {
+  switch ($key) {
+    case 'os2web_borgerdk_mail':
+      $message['from'] = $params['from'];
+      $message['subject'] = $params['subject'];
+      $message['body'][] = $params['body'];
+
+      break;
+  }
+}

@@ -1,0 +1,34 @@
+{#
+/**
+ * @file
+ * Default theme implementation to present a os2web_borgerdk_article entity.
+ *
+ * This template is used when viewing a registered os2web_borgerdk_article's page,
+ * e.g., /admin/content/os2web-borgerdk-article)/123. 123 being the os2web_borgerdk_article's ID.
+ *
+ * Available variables:
+ * - content: A list of content items. Use 'content' to print all content, or
+ *   print a subset such as 'content.title'.
+ * - attributes: HTML attributes for the container element.
+ * - view_mode: View mode; for example, "teaser" or "field_reference".
+ * - microarticles: List of Borger.dk Microarticle links
+ * - selfservices: List of Borger.dk Selfservices links
+ *
+ * @see template_preprocess_os2web_borgerdk_article()
+ */
+#}
+<article{{ attributes }}>
+  {% if content %}
+    {{- content|without('microarticles') -}}
+    {% if content.microarticles %}
+      <div class="os2web-borgerdk-microarticles">
+        {{- content.microarticles -}}
+      </div>
+    {% endif %}
+    {% if content.selfservices %}
+      <div class="os2web-borgerdk-selfservices">
+        {{- content.selfservices -}}
+      </div>
+    {% endif %}
+  {% endif %}
+</article>

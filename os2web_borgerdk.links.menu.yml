@@ -1,0 +1,23 @@
+os2web_borgerdk.settings:
+  title: OS2Web Borger.dk settings
+  description: Settings for OS2Web Borger.dk.
+  route_name: os2web_borgerdk.settings_form
+  parent: system.admin_config_content
+
+entity.os2web_borgerdk_article.settings:
+  title: Borger.dk article
+  description: Configure a Borger.dk article entity type
+  route_name:  entity.os2web_borgerdk_article.settings
+  parent: system.admin_structure
+
+entity.os2web_borgerdk_microarticle.settings:
+  title: Borger.dk microarticle
+  description: Configure a Borger.dk microarticle entity type
+  route_name:  entity.os2web_borgerdk_microarticle.settings
+  parent: system.admin_structure
+
+entity.os2web_borgerdk_selfservice.settings:
+  title: Borger.dk selfservice
+  description: Configure a Borger.dk selfservice entity type
+  route_name:  entity.os2web_borgerdk_selfservice.settings
+  parent: system.admin_structure

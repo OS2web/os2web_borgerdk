@@ -1,0 +1,19 @@
+os2web_borgerdk_article.add_form:
+  route_name: entity.os2web_borgerdk_article.add_form
+  title: 'Add Borger.dk article'
+  appears_on:
+    - entity.os2web_borgerdk_article.collection
+
+os2web_borgerdk_microarticle.add_form:
+  route_name: entity.os2web_borgerdk_microarticle.add_form
+  title: 'Add Borger.dk microarticle'
+  appears_on:
+    - entity.os2web_borgerdk_microarticle.collection
+
+os2web_borgerdk_selfservice.add_form:
+  route_name: entity.os2web_borgerdk_selfservice.add_form
+  title: 'Add Borger.dk selfservice'
+  appears_on:
+    - entity.os2web_borgerdk_selfservice.collection
+
+

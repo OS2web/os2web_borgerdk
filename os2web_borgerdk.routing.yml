@@ -1,0 +1,34 @@
+os2web_borgerdk.settings_form:
+  path: '/admin/config/content/os2web-borgerdk'
+  defaults:
+    _title: 'OS2Web Borger.dk settings'
+    _form: 'Drupal\os2web_borgerdk\Form\SettingsForm'
+  requirements:
+    _permission: 'administer os2web_borgerdk configuration'
+
+entity.os2web_borgerdk_article.settings:
+  path: 'admin/structure/os2web-borgerdk-article'
+  defaults:
+    _form: '\Drupal\os2web_borgerdk\Form\BorgerdkArticleSettingsForm'
+    _title: 'Borger.dk article'
+  requirements:
+    _permission: 'administer os2web_borgerdk content'
+
+entity.os2web_borgerdk_microarticle.settings:
+  path: 'admin/structure/os2web-borgerdk-microarticle'
+  defaults:
+    _form: '\Drupal\os2web_borgerdk\Form\BorgerdkMicroarticleSettingsForm'
+    _title: 'Borger.dk microarticle'
+  requirements:
+    _permission: 'administer os2web_borgerdk content'
+
+entity.os2web_borgerdk_selfservice.settings:
+  path: 'admin/structure/os2web-borgerdk-selfservice'
+  defaults:
+    _form: '\Drupal\os2web_borgerdk\Form\BorgerdkSelfserviceSettingsForm'
+    _title: 'Borger.dk selfservice'
+  requirements:
+    _permission: 'administer os2web_borgerdk content'
+
+
+

@@ -1,0 +1,10 @@
+field.field_settings.os2web_borgerdk_article_reference:
+  type: mapping
+  label: 'OS2Web Borger.dk Article reference settings'
+  mapping:
+    handler:
+      type: string
+      label: 'Reference method'
+    handler_settings:
+      type: entity_reference_selection.[%parent.handler]
+      label: 'Entity reference selection settings'
