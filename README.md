@@ -52,11 +52,11 @@ The import process can be done in two ways:
 
 
 ## Update
-Updating process for OS2Web SimpleSAML Checklist module is similar to usual Drupal 8 module.
+Updating process for OS2Web Borger.dk module is similar to usual Drupal 8 module.
 Use Composer's built-in command for listing packages that have updates available:
 
 ```
-composer outdated os2web/os2web_simplesaml_checklist
+composer outdated os2web/os2web_borgerdk
 ```
 
 ## Automated testing and code quality
