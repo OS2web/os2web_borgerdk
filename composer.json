@@ -7,11 +7,11 @@
     "license": "EUPL-1.2",
     "repositories": [
         {
-            "type": "git",
-            "url": "git@github.com:bellcom/borgerdk-php.git"
+            "type": "vcs",
+            "url": "https://github.com/bellcom/borgerdk-php"
         }
     ],
     "require": {
-        "ffwagency/borgerdk-php": "dev-develop"
+        "bellcom/borgerdk-php": "bellcom-develop"
     }
 }
