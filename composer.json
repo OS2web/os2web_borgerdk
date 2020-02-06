@@ -12,6 +12,6 @@
         }
     ],
     "require": {
-        "bellcom/borgerdk-php": "bellcom-develop"
+        "bellcom/borgerdk-php": "dev-bellcom-develop"
     }
 }
