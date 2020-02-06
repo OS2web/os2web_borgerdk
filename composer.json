@@ -10,7 +10,7 @@
             "type": "package",
             "package": {
                 "name": "ffwagency/borgerdk-php",
-                "version": "dev-develop",
+                "version": "dev-develop-bellcom",
                 "source": {
                     "url": "https://github.com/bellcom/borgerdk-php.git",
                     "type": "git",
@@ -23,6 +23,6 @@
         }
     ],
     "require": {
-        "ffwagency/borgerdk-php": "dev-develop"
+        "ffwagency/borgerdk-php": "dev-develop-bellcom"
     }
 }
