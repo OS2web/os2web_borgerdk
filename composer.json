@@ -23,6 +23,6 @@
         }
     ],
     "require": {
-        "ffwagency/borgerdk-php": "dev-develop-bellcom"
+        "ffwagency/borgerdk-php": "dev-develop"
     }
 }
