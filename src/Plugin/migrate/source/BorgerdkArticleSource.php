@@ -208,6 +208,7 @@ class BorgerdkArticleSource extends SourcePluginBase implements ConfigurableInte
             'format' => 'basic_html',
           ]);
           $entity->set('weight', $weight);
+          $entity->set('source', 'Borger.dk');
           $weight++;
 
           // If Borger.dk article is already present, set is as parent.
@@ -256,6 +257,7 @@ class BorgerdkArticleSource extends SourcePluginBase implements ConfigurableInte
           $entity->set('label', $selfservice->label);
           $entity->set('selfserviceUrl', $selfservice->url);
           $entity->set('weight', $weight);
+          $entity->set('source', 'Borger.dk');
           $weight++;
 
           // Check if we have a microarticle with the similar title.

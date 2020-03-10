@@ -70,6 +70,25 @@ interface BorgerdkContentInterface extends ContentEntityInterface, EntityOwnerIn
   public function setStatus($status);
 
   /**
+   * Gets the borger.dk content source.
+   *
+   * @return string
+   *   Source of the borger.dk content.
+   */
+  public function getSource();
+
+  /**
+   * Sets the borger.dk content source.
+   *
+   * @param string $source
+   *   Source of the borger.dk content.
+   *
+   * @return \Drupal\os2web_borgerdk\BorgerdkContentInterface
+   *   The called borger.dk content entity.
+   */
+  public function setSource($source);
+
+  /**
    * Loads the entity by it's Borger.dk ID.
    *
    * @param string $borgerdkID

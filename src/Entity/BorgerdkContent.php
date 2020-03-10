@@ -107,6 +107,21 @@ abstract class BorgerdkContent extends ContentEntityBase implements BorgerdkCont
   /**
    * {@inheritdoc}
    */
+  public function getSource() {
+    return $this->get('source')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setSource($source) {
+    $this->set('source', $source);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
 
     $fields = parent::baseFieldDefinitions($entity_type);
@@ -133,6 +148,19 @@ abstract class BorgerdkContent extends ContentEntityBase implements BorgerdkCont
     $fields['lang'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Language'))
       ->setDescription(t('The language of Borger.dk content entity.'))
+      ->setRequired(TRUE)
+      ->setSetting('max_length', 255)
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'string',
+        'weight' => 21,
+      ])
+      ->setDisplayConfigurable('view', TRUE);
+
+    // System field, Source field.
+    $fields['source'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Source'))
+      ->setDescription(t('The source of Borger.dk content entity.'))
       ->setRequired(TRUE)
       ->setSetting('max_length', 255)
       ->setDisplayOptions('view', [

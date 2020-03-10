@@ -38,6 +38,9 @@ class BorgerdkMicroarticleForm extends ContentEntityForm {
         $lastWeight++;
         $entity->setWeight($lastWeight);
       }
+
+      // Setting source.
+      $entity->setSource('Manual');
     }
 
     $result = $entity->save();

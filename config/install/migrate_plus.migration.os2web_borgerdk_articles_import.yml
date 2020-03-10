@@ -39,6 +39,9 @@ process:
     plugin: default_value
     default_value: 0
   lang: lang
+  source:
+    plugin: default_value
+    default_value: 'Borger.dk'
   municipality_code: municipalityCode
 destination:
   plugin: 'entity:os2web_borgerdk_article'
