@@ -19,7 +19,7 @@
 #}
 <article{{ attributes }}>
   {% if content %}
-    {{- content|without('microarticles') -}}
+    {{- content|without('microarticles', 'selfservices') -}}
     {% if content.microarticles %}
       <div class="os2web-borgerdk-microarticles">
         {{- content.microarticles -}}

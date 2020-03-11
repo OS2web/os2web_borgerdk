@@ -43,6 +43,8 @@ process:
     plugin: default_value
     default_value: 'Borger.dk'
   municipality_code: municipalityCode
+  os2web_borgerdk_microarticles: article_microarticle_targets
+  os2web_borgerdk_selfservices: article_selfservice_targets
 destination:
   plugin: 'entity:os2web_borgerdk_article'
 migration_dependencies:

@@ -17,8 +17,8 @@ class BorgerdkArticleForm extends ContentEntityForm {
     /** @var \Drupal\os2web_borgerdk\BorgerdkArticleInterface $entity */
     $entity = $this->getEntity();
 
+    // Setting source.
     if ($entity->isNew()) {
-      // Setting source.
       $entity->setSource('Manual');
     }
 

@@ -4,7 +4,7 @@ dependencies:
   module:
     - os2web_borgerdk
 _core:
-  default_config_hash: JcKOj7FaqPmyjEQlb_iyn8xahADeiHxI4cfOB-i4HxE
+  default_config_hash: OIB7ZasH4nVKRXIyusUoKH93IzBFmbRGtHiBJ2loeVw
 id: os2web_borgerdk_selfservices
 label: 'OS2Web Borger.dk Selfservices'
 module: views
@@ -200,71 +200,6 @@ display:
           field_api_classes: false
           entity_type: null
           entity_field: title
-          plugin_id: field
-        os2web_borgerdk_article_id:
-          id: os2web_borgerdk_article_id
-          table: os2web_borgerdk_selfservice
-          field: os2web_borgerdk_article_id
-          relationship: none
-          group_type: group
-          admin_label: ''
-          label: Article
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: target_id
-          type: entity_reference_label
-          settings:
-            link: true
-          group_column: target_id
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          entity_type: os2web_borgerdk_selfservice
-          entity_field: os2web_borgerdk_article_id
           plugin_id: field
         lang:
           id: lang
@@ -690,52 +625,6 @@ display:
           entity_type: os2web_borgerdk_selfservice
           entity_field: title
           plugin_id: string
-        title_1:
-          id: title_1
-          table: os2web_borgerdk_article
-          field: title
-          relationship: os2web_borgerdk_article_id
-          group_type: group
-          admin_label: ''
-          operator: contains
-          value: ''
-          group: 1
-          exposed: true
-          expose:
-            operator_id: title_1_op
-            label: 'Article title'
-            description: ''
-            use_operator: false
-            operator: title_1_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: article_title
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-            placeholder: ''
-          is_grouped: false
-          group_info:
-            label: Title
-            description: null
-            identifier: title_1
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items:
-              1: {  }
-              2: {  }
-              3: {  }
-          entity_type: os2web_borgerdk_article
-          entity_field: title
-          plugin_id: string
         status:
           id: status
           table: os2web_borgerdk_selfservice
@@ -789,18 +678,7 @@ display:
       header: {  }
       footer: {  }
       empty: {  }
-      relationships:
-        os2web_borgerdk_article_id:
-          id: os2web_borgerdk_article_id
-          table: os2web_borgerdk_selfservice
-          field: os2web_borgerdk_article_id
-          relationship: none
-          group_type: group
-          admin_label: 'Borger.dk Article'
-          required: false
-          entity_type: os2web_borgerdk_selfservice
-          entity_field: os2web_borgerdk_article_id
-          plugin_id: standard
+      relationships: {  }
       arguments: {  }
       display_extenders: {  }
       filter_groups:

@@ -4,7 +4,6 @@ namespace Drupal\os2web_borgerdk\Form;
 
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\os2web_borgerdk\Entity\BorgerdkSelfservice;
 
 /**
  * Form controller for the borger.dk selfservice entity edit forms.
@@ -18,28 +17,8 @@ class BorgerdkSelfserviceForm extends ContentEntityForm {
     /** @var \Drupal\os2web_borgerdk\BorgerdkSelfserviceInterface $entity */
     $entity = $this->getEntity();
 
-    // Calculates the weight of the new microarticle as the weight of the
-    // max + 1.
-    if ($entity->isNew() && $entity->getWeight() == 0) {
-      /** @var \Drupal\os2web_borgerdk\BorgerdkArticleInterface $article */
-      $article = $entity->getArticle();
-      // Getting all selfservices from this article, ordered by weight.
-      $selfservices = $article->getSelfservices(FALSE);
-
-      if (!empty($selfservices)) {
-        $highestWeightSelfservice = end($selfservices);
-        /** @var \Drupal\os2web_borgerdk\BorgerdkSelfserviceInterface $lastSelfservice */
-        $lastSelfservice = BorgerdkSelfservice::load($highestWeightSelfservice);
-
-        // Getting last selfservice weight.
-        $lastWeight = $lastSelfservice->getWeight();
-
-        // Setting new weight, as last MA weight +1.
-        $lastWeight++;
-        $entity->setWeight($lastWeight);
-      }
-
-      // Setting source.
+    // Setting source.
+    if ($entity->isNew()) {
       $entity->setSource('Manual');
     }
 

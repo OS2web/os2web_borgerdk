@@ -93,52 +93,7 @@ class BorgerdkSelfservice extends BorgerdkContent implements BorgerdkSelfservice
       ])
       ->setDisplayConfigurable('view', TRUE);
 
-    // Borger.dk - Selfservice Weight field.
-    $fields['weight'] = BaseFieldDefinition::create('integer')
-      ->setLabel(t('Weight'))
-      ->setDescription(t('The order of the selfservice, taken from Borger.dk'))
-      ->setDefaultValue(0)
-      ->setRequired(TRUE);
-
-    // Borger.dk - Selfservice Article reference field.
-    $fields['os2web_borgerdk_article_id'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Article'))
-      ->setDescription(t('Borger.dk parent article.'))
-      ->setSetting('target_type', 'os2web_borgerdk_article')
-      ->setDisplayOptions('form', [
-        'type' => 'options_select',
-        'weight' => 2,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setRequired(TRUE);
-
-    // Borger.dk - Selfservice Microarticle reference field.
-    $fields['os2web_borgerdk_microarticle_id'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Microarticle'))
-      ->setDescription(t('Borger.dk parent microarticle.'))
-      ->setSetting('target_type', 'os2web_borgerdk_microarticle')
-      ->setDisplayOptions('form', [
-        'type' => 'options_select',
-        'weight' => 3,
-      ])
-      ->setDisplayConfigurable('form', TRUE);
-
     return $fields;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getWeight() {
-    return $this->get('weight')->value;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setWeight($weight) {
-    $this->set('weight', $weight);
-    return $this;
   }
 
   /**
@@ -152,13 +107,14 @@ class BorgerdkSelfservice extends BorgerdkContent implements BorgerdkSelfservice
    * {@inheritdoc}
    */
   public function getArticle($load = TRUE) {
-    if ($fieldOs2webBorgerdkArticleId = $this->get('os2web_borgerdk_article_id')->first()) {
-      if ($load) {
-        return $fieldOs2webBorgerdkArticleId->get('entity')->getTarget()->getValue();
-      }
-      else {
-        return $fieldOs2webBorgerdkArticleId->getValue()['target_id'];
-      }
+    $query = \Drupal::entityQuery('node')
+      ->condition('type', 'os2web_borgerdk_article')
+      ->condition('os2web_borgerdk_selfservices', $this->id());
+
+    $ids = $query->execute();
+    if (!empty($nids)) {
+      $id = reset($ids);
+      return ($load) ? BorgerdkArticle::load($id) : $id;
     }
 
     return NULL;

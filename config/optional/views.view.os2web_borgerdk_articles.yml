@@ -4,7 +4,7 @@ dependencies:
   module:
     - os2web_borgerdk
 _core:
-  default_config_hash: NJgHzKPAXYyPfApRBgZN3pd0uCXaDTCos0in9VfKrtc
+  default_config_hash: UniQRjVqp2wcKoTQS0PBVW_YdfiLCXTv_LjV5ZoNAds
 id: os2web_borgerdk_articles
 label: 'OS2Web Borger.dk Articles'
 module: views

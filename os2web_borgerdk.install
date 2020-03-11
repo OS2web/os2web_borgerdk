@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Field\FieldStorageDefinitionInterface;
 
 /**
  * Implements hook_install().
@@ -65,4 +66,81 @@ function os2web_borgerdk_update_8001() {
 
   \Drupal::entityDefinitionUpdateManager()
     ->installFieldStorageDefinition('source', 'os2web_borgerdk_selfservice', 'os2web_borgerdk_selfservice', $storage_definition);
+}
+
+/**
+ * Implements hook_update_N().
+ *
+ * Changing Borger.dk content reference structure.
+ */
+function os2web_borgerdk_update_8002() {
+  // Adding os2web_borgerdk_microarticles field.
+  $storage_definition = BaseFieldDefinition::create('entity_reference')
+    ->setLabel(t('Microarticles'))
+    ->setDescription(t('Borger.dk microarticles'))
+    ->setSetting('target_type', 'os2web_borgerdk_microarticle')
+    ->setDisplayOptions('form', [
+      'type' => 'entity_reference_autocomplete',
+      'weight' => 5,
+      'settings' => [
+        'match_operator' => 'CONTAINS',
+        'size' => '60',
+        'autocomplete_type' => 'tags',
+        'placeholder' => '',
+      ],
+    ])
+    ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
+    ->setDisplayConfigurable('form', TRUE);
+
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('os2web_borgerdk_microarticles', 'os2web_borgerdk_article', 'os2web_borgerdk_article', $storage_definition);
+
+  // Remove Microarticle weight field.
+  $definition = \Drupal::entityDefinitionUpdateManager()->getFieldStorageDefinition('weight', 'os2web_borgerdk_microarticle');
+  \Drupal::entityDefinitionUpdateManager()
+    ->uninstallFieldStorageDefinition($definition);
+
+  // Remove Microarticle os2web_borgerdk_article_id field.
+  $definition = \Drupal::entityDefinitionUpdateManager()->getFieldStorageDefinition('os2web_borgerdk_article_id', 'os2web_borgerdk_microarticle');
+  \Drupal::entityDefinitionUpdateManager()
+    ->uninstallFieldStorageDefinition($definition);
+
+  // Adding os2web_borgerdk_selfservices field.
+  $storage_definition = BaseFieldDefinition::create('entity_reference')
+    ->setLabel(t('Selfservices'))
+    ->setDescription(t('Borger.dk selfservices'))
+    ->setSetting('target_type', 'os2web_borgerdk_selfservice')
+    ->setDisplayOptions('form', [
+      'type' => 'entity_reference_autocomplete',
+      'weight' => 5,
+      'settings' => [
+        'match_operator' => 'CONTAINS',
+        'size' => '60',
+        'autocomplete_type' => 'tags',
+        'placeholder' => '',
+      ],
+    ])
+    ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
+    ->setDisplayConfigurable('form', TRUE);
+
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('os2web_borgerdk_selfservices', 'os2web_borgerdk_article', 'os2web_borgerdk_article', $storage_definition);
+
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('os2web_borgerdk_selfservices', 'os2web_borgerdk_microarticle', 'os2web_borgerdk_microarticle', $storage_definition);
+
+  // Remove Selfservice weight field.
+  $definition = \Drupal::entityDefinitionUpdateManager()->getFieldStorageDefinition('weight', 'os2web_borgerdk_selfservice');
+  \Drupal::entityDefinitionUpdateManager()
+    ->uninstallFieldStorageDefinition($definition);
+
+  // Remove Selfservice os2web_borgerdk_article_id field.
+  $definition = \Drupal::entityDefinitionUpdateManager()->getFieldStorageDefinition('os2web_borgerdk_article_id', 'os2web_borgerdk_selfservice');
+  \Drupal::entityDefinitionUpdateManager()
+    ->uninstallFieldStorageDefinition($definition);
+
+  // Remove Selfservice os2web_borgerdk_microarticle_id field.
+  $definition = \Drupal::entityDefinitionUpdateManager()->getFieldStorageDefinition('os2web_borgerdk_microarticle_id', 'os2web_borgerdk_selfservice');
+  \Drupal::entityDefinitionUpdateManager()
+    ->uninstallFieldStorageDefinition($definition);
 }
