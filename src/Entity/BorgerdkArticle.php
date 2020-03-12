@@ -207,22 +207,25 @@ class BorgerdkArticle extends BorgerdkContent implements BorgerdkArticleInterfac
     if ($fieldMas = $this->get('os2web_borgerdk_microarticles')) {
       $microarticleIds = array_column($fieldMas->getValue(), 'target_id');
 
-      $query = \Drupal::entityQuery('os2web_borgerdk_microarticle')
-        ->condition('id', $microarticleIds, 'IN');
+      if (!empty($microarticleIds)) {
+        $query = \Drupal::entityQuery('os2web_borgerdk_microarticle')
+          ->condition('id', $microarticleIds, 'IN');
 
-      $query = $this->addQueryConditions($query, $conditionParams);
-      $ids = $query->execute();
+        $query = $this->addQueryConditions($query, $conditionParams);
+        $ids = $query->execute();
 
-      if (!empty($ids)) {
-        // Ordering IDs so that the are sorted according to MA delta in Article.
-        $orderedIds = [];
-        foreach ($microarticleIds as $microarticleId) {
-          if (in_array($microarticleId, $ids)) {
-            $orderedIds[] = $microarticleId;
+        if (!empty($ids)) {
+          // Ordering IDs so that the are sorted according to MA delta in
+          // Article.
+          $orderedIds = [];
+          foreach ($microarticleIds as $microarticleId) {
+            if (in_array($microarticleId, $ids)) {
+              $orderedIds[] = $microarticleId;
+            }
           }
-        }
 
-        return ($load) ? BorgerdkMicroarticle::loadMultiple($orderedIds) : $orderedIds;
+          return ($load) ? BorgerdkMicroarticle::loadMultiple($orderedIds) : $orderedIds;
+        }
       }
     }
 
@@ -236,22 +239,25 @@ class BorgerdkArticle extends BorgerdkContent implements BorgerdkArticleInterfac
     if ($fieldSS = $this->get('os2web_borgerdk_selfservices')) {
       $selfserviceIds = array_column($fieldSS->getValue(), 'target_id');
 
-      $query = \Drupal::entityQuery('os2web_borgerdk_selfservice')
-        ->condition('id', $selfserviceIds, 'IN');
+      if (!empty($selfserviceIds)) {
+        $query = \Drupal::entityQuery('os2web_borgerdk_selfservice')
+          ->condition('id', $selfserviceIds, 'IN');
 
-      $query = $this->addQueryConditions($query, $conditionParams);
+        $query = $this->addQueryConditions($query, $conditionParams);
 
-      $ids = $query->execute();
-      if (!empty($ids)) {
-        // Ordering IDs so that the are sorted according to SS delta in Article.
-        $orderedIds = [];
-        foreach ($selfserviceIds as $selfserviceId) {
-          if (in_array($selfserviceId, $ids)) {
-            $orderedIds[] = $selfserviceId;
+        $ids = $query->execute();
+        if (!empty($ids)) {
+          // Ordering IDs so that the are sorted according to SS delta in
+          // Article.
+          $orderedIds = [];
+          foreach ($selfserviceIds as $selfserviceId) {
+            if (in_array($selfserviceId, $ids)) {
+              $orderedIds[] = $selfserviceId;
+            }
           }
-        }
 
-        return ($load) ? BorgerdkSelfservice::loadMultiple($orderedIds) : $orderedIds;
+          return ($load) ? BorgerdkSelfservice::loadMultiple($orderedIds) : $orderedIds;
+        }
       }
     }
 
