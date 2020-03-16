@@ -8,6 +8,7 @@
     "require": {
         "ffwagency/borgerdk-php": "dev-develop",
         "drupal/migrate_plus": "^4.2",
-        "drupal/migrate_tools": "^4.5"
+        "drupal/migrate_tools": "^4.5",
+        "drupal/paragraphs": "^1.11"
     }
 }

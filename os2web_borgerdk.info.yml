@@ -9,4 +9,5 @@ dependencies:
   - drupal:text
   - migrate_plus
   - migrate_tools
+  - paragraphs
 configure: os2web_borgerdk.settings_form
