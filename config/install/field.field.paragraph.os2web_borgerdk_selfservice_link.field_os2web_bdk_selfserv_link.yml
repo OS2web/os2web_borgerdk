@@ -4,6 +4,8 @@ dependencies:
   config:
     - field.storage.paragraph.field_os2web_bdk_selfserv_link
     - paragraphs.paragraphs_type.os2web_borgerdk_selfservice_link
+  module:
+    - os2web_borgerdk
 id: paragraph.os2web_borgerdk_selfservice_link.field_os2web_bdk_selfserv_link
 field_name: field_os2web_bdk_selfserv_link
 entity_type: paragraph

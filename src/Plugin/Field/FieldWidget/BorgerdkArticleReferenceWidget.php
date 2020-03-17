@@ -2,6 +2,7 @@
 
 namespace Drupal\os2web_borgerdk\Plugin\Field\FieldWidget;
 
+use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\Plugin\Field\FieldWidget\OptionsWidgetBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -50,13 +51,14 @@ class BorgerdkArticleReferenceWidget extends OptionsWidgetBase {
     $select = $element;
     $select = parent::formElement($items, $delta, $select, $form, $form_state);
 
+    $wrapperId = implode('-', $element['#field_parents']) . "$fieldName-container-$delta";
     $select += [
       '#type' => 'select',
       '#options' => $this->getOptions($items->getEntity()),
       '#default_value' => $articleReferenceItem->getArticleValue(),
       '#ajax' => [
         'callback' => [$this, 'reloadArticleContent'],
-        'wrapper' => "$fieldName-container-$delta",
+        'wrapper' => $wrapperId,
       ],
     ];
     $select['#weight'] = 0;
@@ -65,7 +67,7 @@ class BorgerdkArticleReferenceWidget extends OptionsWidgetBase {
       '#type' => 'details',
     ];
     $element['target_id'] = $select;
-    $element['#attributes']['id'] = "$fieldName-container-$delta";
+    $element['#attributes']['id'] = $wrapperId;
 
     if ($selectedArticle) {
       $element['#title'] = $selectedArticle->label();
@@ -215,11 +217,14 @@ class BorgerdkArticleReferenceWidget extends OptionsWidgetBase {
   public function reloadArticleContent(array $form, FormStateInterface $form_state) {
     // Getting trigger element.
     $triggerElement = $form_state->getTriggeringElement();
-    $delta = $triggerElement['#delta'];
-    $fieldContainer = $form[$triggerElement['#parents'][0]];
+
+    // Getting element parents.
+    $arrayParents = $triggerElement['#array_parents'];
+    // Removing last element (target_id).
+    array_pop($arrayParents);
 
     // The details element, which is a parent of a triggering element.
-    $detailsElements = $fieldContainer['widget'][$delta];
+    $detailsElements = NestedArray::getValue($form, $arrayParents);
 
     // Making details element expanded and hiding the weight field.
     $detailsElements['#open'] = TRUE;
