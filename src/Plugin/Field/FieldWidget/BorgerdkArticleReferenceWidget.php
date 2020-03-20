@@ -52,9 +52,12 @@ class BorgerdkArticleReferenceWidget extends OptionsWidgetBase {
     $select = parent::formElement($items, $delta, $select, $form, $form_state);
 
     $wrapperId = implode('-', $element['#field_parents']) . "$fieldName-container-$delta";
+    $articleOptions = $this->getOptions($items->getEntity());
+    sort($articleOptions);
+
     $select += [
       '#type' => 'select',
-      '#options' => $this->getOptions($items->getEntity()),
+      '#options' => $articleOptions,
       '#default_value' => $articleReferenceItem->getArticleValue(),
       '#ajax' => [
         'callback' => [$this, 'reloadArticleContent'],
