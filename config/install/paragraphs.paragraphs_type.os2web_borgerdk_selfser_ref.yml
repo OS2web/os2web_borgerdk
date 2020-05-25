@@ -4,8 +4,8 @@ dependencies:
   enforced:
     module:
       - os2web_borgerdk
-id: os2web_borgerdk_selfservice_link
-label: 'OS2Web Selfservice link'
+id: os2web_borgerdk_selfser_ref
+label: 'OS2Web Borger.dk selfservice reference'
 icon_uuid: null
 icon_default: null
 description: ''
