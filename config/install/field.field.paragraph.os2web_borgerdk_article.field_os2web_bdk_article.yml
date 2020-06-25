@@ -11,7 +11,7 @@ id: paragraph.os2web_borgerdk_article.field_os2web_bdk_article
 field_name: field_os2web_bdk_article
 entity_type: paragraph
 bundle: os2web_borgerdk_article
-label: Article
+label: Artikel
 description: ''
 required: false
 translatable: false

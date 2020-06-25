@@ -5,7 +5,7 @@ dependencies:
     module:
       - os2web_borgerdk
 id: os2web_borgerdk_article
-label: 'OS2Web Borger.dk article'
+label: 'Borger.dk artikel'
 icon_uuid: null
 icon_default: null
 description: ''
