@@ -4,7 +4,9 @@ namespace Drupal\os2web_borgerdk\Entity;
 
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\os2web_borgerdk\BorgerdkMicroarticleInterface;
+use Drupal\os2web_borgerdk\BorgerdkSelfserviceInterface;
 
 /**
  * Defines the borger.dk microarticle entity class.
@@ -75,41 +77,25 @@ class BorgerdkMicroarticle extends BorgerdkContent implements BorgerdkMicroartic
       ])
       ->setDisplayConfigurable('view', TRUE);
 
-    // Borger.dk - Microarticle Weight field.
-    $fields['weight'] = BaseFieldDefinition::create('integer')
-      ->setLabel(t('Weight'))
-      ->setDescription(t('The order of the microarticle, taken from Borger.dk'))
-      ->setDefaultValue(0)
-      ->setRequired(TRUE);
-
-    // Borger.dk - Microarticle Article reference field.
-    $fields['os2web_borgerdk_article_id'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Article'))
-      ->setDescription(t('Borger.dk parent article.'))
-      ->setSetting('target_type', 'os2web_borgerdk_article')
+    // Borger.dk - Selfservice reference field.
+    $fields['os2web_borgerdk_selfservices'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Selfservices'))
+      ->setDescription(t('Borger.dk selfservices'))
+      ->setSetting('target_type', 'os2web_borgerdk_selfservice')
       ->setDisplayOptions('form', [
-        'type' => 'options_select',
-        'weight' => 2,
+        'type' => 'entity_reference_autocomplete',
+        'weight' => 5,
+        'settings' => [
+          'match_operator' => 'CONTAINS',
+          'size' => '60',
+          'autocomplete_type' => 'tags',
+          'placeholder' => '',
+        ],
       ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setRequired(TRUE);
+      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
+      ->setDisplayConfigurable('form', TRUE);
 
     return $fields;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getWeight() {
-    return $this->get('weight')->value;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setWeight($weight) {
-    $this->set('weight', $weight);
-    return $this;
   }
 
   /**
@@ -124,13 +110,14 @@ class BorgerdkMicroarticle extends BorgerdkContent implements BorgerdkMicroartic
    * {@inheritdoc}
    */
   public function getArticle($load = TRUE) {
-    if ($fieldOs2webBorgerdkArticleId = $this->get('os2web_borgerdk_article_id')->first()) {
-      if ($load) {
-        return $fieldOs2webBorgerdkArticleId->get('entity')->getTarget()->getValue();
-      }
-      else {
-        return $fieldOs2webBorgerdkArticleId->getValue()['target_id'];
-      }
+    $query = \Drupal::entityQuery('node')
+      ->condition('type', 'os2web_borgerdk_article')
+      ->condition('os2web_borgerdk_microarticles', $this->id());
+
+    $ids = $query->execute();
+    if (!empty($nids)) {
+      $id = reset($ids);
+      return ($load) ? BorgerdkArticle::load($id) : $id;
     }
 
     return NULL;
@@ -140,15 +127,30 @@ class BorgerdkMicroarticle extends BorgerdkContent implements BorgerdkMicroartic
    * {@inheritdoc}
    */
   public function getSelfservices($load = TRUE) {
-    $query = \Drupal::entityQuery('os2web_borgerdk_selfservice')
-      ->condition('os2web_borgerdk_microarticle_id', $this->id());
-
-    $ids = $query->execute();
-    if (!empty($ids)) {
-      return ($load) ? BorgerdkSelfservice::loadMultiple($ids) : $ids;
+    if ($fieldSS = $this->get('os2web_borgerdk_selfservices')) {
+      if ($load) {
+        return $fieldSS->referencedEntities();
+      }
+      else {
+        return array_column($fieldSS->getValue(), 'target_id');
+      }
     }
 
     return [];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function addSelfservice(BorgerdkSelfserviceInterface $selfservice, $save = TRUE) {
+    $selfservices = $this->get('os2web_borgerdk_selfservices')->getValue();
+    $key = array_search($selfservice->id(), array_column($selfservices, 'target_id'));
+    if ($key === FALSE) {
+      $this->get('os2web_borgerdk_selfservices')->appendItem($selfservice->id());
+      if ($save) {
+        $this->save();
+      }
+    }
   }
 
   /**

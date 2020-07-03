@@ -4,7 +4,6 @@ namespace Drupal\os2web_borgerdk\Form;
 
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\os2web_borgerdk\Entity\BorgerdkMicroarticle;
 
 /**
  * Form controller for the borger.dk microarticle entity edit forms.
@@ -18,26 +17,9 @@ class BorgerdkMicroarticleForm extends ContentEntityForm {
     /** @var \Drupal\os2web_borgerdk\BorgerdkMicroarticleInterface $entity */
     $entity = $this->getEntity();
 
-    // Calculates the weight of the new microarticle as the weight of the
-    // max + 1.
-    if ($entity->isNew() && $entity->getWeight() == 0) {
-      /** @var \Drupal\os2web_borgerdk\BorgerdkArticleInterface $article */
-      $article = $entity->getArticle();
-      // Getting all microarticles from this article, ordered by weight.
-      $microarticles = $article->getMicroarticles(FALSE);
-
-      if (!empty($microarticles)) {
-        $highestWeightMicroarticle = end($microarticles);
-        /** @var \Drupal\os2web_borgerdk\BorgerdkMicroarticleInterface $lastMicroarticle */
-        $lastMicroarticle = BorgerdkMicroarticle::load($highestWeightMicroarticle);
-
-        // Getting last microarticle weight.
-        $lastWeight = $lastMicroarticle->getWeight();
-
-        // Setting new weight, as last MA weight +1.
-        $lastWeight++;
-        $entity->setWeight($lastWeight);
-      }
+    // Setting source.
+    if ($entity->isNew()) {
+      $entity->setSource('Manual');
     }
 
     $result = $entity->save();

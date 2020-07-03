@@ -2,9 +2,9 @@
 
 namespace Drupal\os2web_borgerdk\Entity;
 
-use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\os2web_borgerdk\BorgerdkArticleInterface;
 
 /**
@@ -142,6 +142,42 @@ class BorgerdkArticle extends BorgerdkContent implements BorgerdkArticleInterfac
       ])
       ->setDisplayConfigurable('view', TRUE);
 
+    // Borger.dk - Microarticles reference field.
+    $fields['os2web_borgerdk_microarticles'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Microarticles'))
+      ->setDescription(t('Borger.dk microarticles'))
+      ->setSetting('target_type', 'os2web_borgerdk_microarticle')
+      ->setDisplayOptions('form', [
+        'type' => 'entity_reference_autocomplete',
+        'weight' => 5,
+        'settings' => [
+          'match_operator' => 'CONTAINS',
+          'size' => '60',
+          'autocomplete_type' => 'tags',
+          'placeholder' => '',
+        ],
+      ])
+      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
+      ->setDisplayConfigurable('form', TRUE);
+
+    // Borger.dk - Selfservice reference field.
+    $fields['os2web_borgerdk_selfservices'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Selfservices'))
+      ->setDescription(t('Borger.dk selfservices'))
+      ->setSetting('target_type', 'os2web_borgerdk_selfservice')
+      ->setDisplayOptions('form', [
+        'type' => 'entity_reference_autocomplete',
+        'weight' => 5,
+        'settings' => [
+          'match_operator' => 'CONTAINS',
+          'size' => '60',
+          'autocomplete_type' => 'tags',
+          'placeholder' => '',
+        ],
+      ])
+      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
+      ->setDisplayConfigurable('form', TRUE);
+
     // Borger.dk - LastUpdated field.
     $fields['lastUpdated'] = BaseFieldDefinition::create('integer')
       ->setLabel(t('Last updated'))
@@ -167,15 +203,29 @@ class BorgerdkArticle extends BorgerdkContent implements BorgerdkArticleInterfac
    * {@inheritDoc}
    */
   public function getMicroarticles($load = TRUE, array $conditionParams = []) {
-    $query = \Drupal::entityQuery('os2web_borgerdk_microarticle')
-      ->condition('os2web_borgerdk_article_id', $this->id())
-      ->sort('weight');
+    if ($fieldMas = $this->get('os2web_borgerdk_microarticles')) {
+      $microarticleIds = array_column($fieldMas->getValue(), 'target_id');
 
-    $query = $this->addQueryConditions($query, $conditionParams);
+      if (!empty($microarticleIds)) {
+        $query = \Drupal::entityQuery('os2web_borgerdk_microarticle')
+          ->condition('id', $microarticleIds, 'IN');
 
-    $ids = $query->execute();
-    if (!empty($ids)) {
-      return ($load) ? BorgerdkMicroarticle::loadMultiple($ids) : $ids;
+        $query = $this->addQueryConditions($query, $conditionParams);
+        $ids = $query->execute();
+
+        if (!empty($ids)) {
+          // Ordering IDs so that the are sorted according to MA delta in
+          // Article.
+          $orderedIds = [];
+          foreach ($microarticleIds as $microarticleId) {
+            if (in_array($microarticleId, $ids)) {
+              $orderedIds[] = $microarticleId;
+            }
+          }
+
+          return ($load) ? BorgerdkMicroarticle::loadMultiple($orderedIds) : $orderedIds;
+        }
+      }
     }
 
     return [];
@@ -185,22 +235,36 @@ class BorgerdkArticle extends BorgerdkContent implements BorgerdkArticleInterfac
    * {@inheritDoc}
    */
   public function getSelfservices($load = TRUE, array $conditionParams = []) {
-    $query = \Drupal::entityQuery('os2web_borgerdk_selfservice')
-      ->condition('os2web_borgerdk_article_id', $this->id())
-      ->sort('weight');
+    if ($fieldSS = $this->get('os2web_borgerdk_selfservices')) {
+      $selfserviceIds = array_column($fieldSS->getValue(), 'target_id');
 
-    $query = $this->addQueryConditions($query, $conditionParams);
+      if (!empty($selfserviceIds)) {
+        $query = \Drupal::entityQuery('os2web_borgerdk_selfservice')
+          ->condition('id', $selfserviceIds, 'IN');
 
-    $ids = $query->execute();
-    if (!empty($ids)) {
-      return ($load) ? BorgerdkSelfservice::loadMultiple($ids) : $ids;
+        $query = $this->addQueryConditions($query, $conditionParams);
+
+        $ids = $query->execute();
+        if (!empty($ids)) {
+          // Ordering IDs so that the are sorted according to SS delta in
+          // Article.
+          $orderedIds = [];
+          foreach ($selfserviceIds as $selfserviceId) {
+            if (in_array($selfserviceId, $ids)) {
+              $orderedIds[] = $selfserviceId;
+            }
+          }
+
+          return ($load) ? BorgerdkSelfservice::loadMultiple($orderedIds) : $orderedIds;
+        }
+      }
     }
 
     return [];
   }
 
   /**
-   * Updates custom microarticles and selfservices weight.
+   * Updates custom microarticles and selfservices delta.
    *
    * @see \Drupal\Core\Entity:save()
    *
@@ -208,49 +272,11 @@ class BorgerdkArticle extends BorgerdkContent implements BorgerdkArticleInterfac
    */
   public function save() {
     if (!$this->isNew()) {
-      $this->updateCustomMicroarticlesWeight();
-      $this->updateCustomSelfservicesWeight();
+      $this->updateCustomMicroarticlesDelta();
+      $this->updateCustomSelfservicesDelta();
     }
 
     return parent::save();
-  }
-
-  /**
-   * Custom postSave handler.
-   *
-   * Updates the references in connected microarticles and selfservices if they
-   * were created the article itself.
-   *
-   * @param \Drupal\Core\Entity\EntityStorageInterface $storage
-   *   The entity storage object.
-   * @param bool $update
-   *   TRUE if the entity has been updated, or FALSE if it has been inserted.
-   *
-   * @see \Drupal\os2web_borgerdk\Plugin\migrate\source\BorgerdkArticle::prepareRow()
-   * @see \Drupal\Core\Entity\ContentEntityBase::postSave()
-   */
-  public function postSave(EntityStorageInterface $storage, $update = TRUE) {
-    if (!$update) {
-      // Updating microarticles.
-      if ($migrate_microarticles = $this->migrate_article_microarticles) {
-        foreach ($migrate_microarticles as $migrate_microarticle) {
-          $migrate_microarticle->set('os2web_borgerdk_article_id', $this->id());
-          $migrate_microarticle->save();
-        }
-        unset($this->migrate_article_microarticles);
-      }
-
-      // Updating selfservices.
-      if ($migrate_selfservices = $this->migrate_article_selfservices) {
-        foreach ($migrate_selfservices as $migrate_selfservice) {
-          $migrate_selfservice->set('os2web_borgerdk_article_id', $this->id());
-          $migrate_selfservice->save();
-        }
-        unset($this->migrate_article_selfservices);
-      }
-    }
-
-    parent::postSave($storage, $update);
   }
 
   /**
@@ -281,68 +307,54 @@ class BorgerdkArticle extends BorgerdkContent implements BorgerdkArticleInterfac
   }
 
   /**
-   * Updates the weight of custom microarticles attached to this article.
+   * Updates the delta of custom microarticles attached to this article.
    *
-   * Does this by retrieving the weight of the last imported microarticle (also
-   * the highest weight), then looping though each custom microarticle and
-   * setting its weight as 1 higher than the previous microarticle weight.
+   * Orders the attached microarticles, so that all custom MA are put to the
+   * end.
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  private function updateCustomMicroarticlesWeight() {
-    // Get last imported microarticle weight.
-    $lastWeight = 0;
+  private function updateCustomMicroarticlesDelta() {
     $importedMaIds = $this->getMicroarticles(FALSE, ['uid' => 0]);
 
+    $orderedMaTargets = [];
     if (!empty($importedMaIds)) {
-      $highestWeightMaId = end($importedMaIds);
-      /** @var \Drupal\os2web_borgerdk\BorgerdkMicroarticleInterface $lastMa */
-      $lastMa = BorgerdkMicroarticle::load($highestWeightMaId);
+      foreach ($importedMaIds as $id) {
+        $orderedMaTargets[] = ['target_id' => $id];
+      }
 
-      // Getting last microarticle weight.
-      $lastWeight = $lastMa->getWeight();
-      $lastWeight++;
-    }
+      $customMaIds = $this->getMicroarticles(FALSE, ['uid' => [0, '<>']]);
+      foreach ($customMaIds as $id) {
+        $orderedMaTargets[] = ['target_id' => $id];
+      }
 
-    // Updating custom microarticles.
-    $customMicroarticles = $this->getMicroarticles(TRUE, ['uid' => [0, '<>']]);
-    foreach ($customMicroarticles as $customMa) {
-      $customMa->setWeight($lastWeight);
-      $customMa->save();
-      $lastWeight++;
+      $this->set('os2web_borgerdk_microarticles', $orderedMaTargets);
     }
   }
 
   /**
-   * Updates the weight of custom selfservices attached to this article.
+   * Updates the delta of custom selfservices attached to this article.
    *
-   * Does this by retrieving the weight of the last imported selfservice (also
-   * the highest weight), then looping though each custom selfservice and
-   * setting its weight as 1 higher than the previous selfservice weight.
+   * Orders the attached selfservices, so that all custom SS are put to the
+   * end.
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  private function updateCustomSelfservicesWeight() {
-    // Get last imported selfservice weight.
-    $lastWeight = 0;
+  private function updateCustomSelfservicesDelta() {
     $importedSsIds = $this->getSelfservices(FALSE, ['uid' => 0]);
 
+    $orderedSsTargets = [];
     if (!empty($importedSsIds)) {
-      $heighestWeightSsId = end($importedSsIds);
-      /** @var \Drupal\os2web_borgerdk\BorgerdkSelfserviceInterface $lastSs */
-      $lastSs = BorgerdkSelfservice::load($heighestWeightSsId);
+      foreach ($importedSsIds as $id) {
+        $orderedSsTargets[] = ['target_id' => $id];
+      }
 
-      // Getting last selfservice weight.
-      $lastWeight = $lastSs->getWeight();
-      $lastWeight++;
-    }
+      $customSsIds = $this->getSelfservices(FALSE, ['uid' => [0, '<>']]);
+      foreach ($customSsIds as $id) {
+        $orderedSsTargets[] = ['target_id' => $id];
+      }
 
-    // Updating custom selfservices.
-    $customSelfservices = $this->getSelfservices(TRUE, ['uid' => [0, '<>']]);
-    foreach ($customSelfservices as $customSs) {
-      $customSs->setWeight($lastWeight);
-      $customSs->save();
-      $lastWeight++;
+      $this->set('os2web_borgerdk_selfservices', $orderedSsTargets);
     }
   }
 

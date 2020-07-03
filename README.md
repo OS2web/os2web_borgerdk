@@ -37,7 +37,6 @@ drush en os2web_borgerdk
 
 The import process can be done in two ways:
 * Via Drush (recommended)
-    * Install and enable contrib module [Migrate tools](https://www.drupal.org/project/migrate_tool).
     * Use the following Drush command to start the migration:
         ```
         drush migrate:import os2web_borgerdk_articles_import

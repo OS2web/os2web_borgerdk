@@ -5,6 +5,9 @@
  * Install, update and uninstall functions for the os2web_borgerdk module.
  */
 
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Field\FieldStorageDefinitionInterface;
+
 /**
  * Implements hook_install().
  */
@@ -35,4 +38,32 @@ function os2web_borgerdk_requirements($phase) {
   }
 
   return $requirements;
+}
+
+/**
+ * Implements hook_update_N().
+ *
+ * Adding source field.
+ */
+function os2web_borgerdk_update_8001() {
+  $storage_definition = BaseFieldDefinition::create('string')
+    ->setLabel(t('Source'))
+    ->setDescription(t('The source of Borger.dk content entity.'))
+    ->setRequired(TRUE)
+    ->setSetting('max_length', 255)
+    ->setDisplayOptions('view', [
+      'label' => 'above',
+      'type' => 'string',
+      'weight' => 21,
+    ])
+    ->setDisplayConfigurable('view', TRUE);
+
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('source', 'os2web_borgerdk_article', 'os2web_borgerdk_article', $storage_definition);
+
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('source', 'os2web_borgerdk_microarticle', 'os2web_borgerdk_microarticle', $storage_definition);
+
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('source', 'os2web_borgerdk_selfservice', 'os2web_borgerdk_selfservice', $storage_definition);
 }

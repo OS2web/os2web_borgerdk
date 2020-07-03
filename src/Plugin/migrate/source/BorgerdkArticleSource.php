@@ -189,7 +189,7 @@ class BorgerdkArticleSource extends SourcePluginBase implements ConfigurableInte
 
       // Creating/updating microarticles.
       $articleMicroarticles = [];
-      $weight = 0;
+      $microarticleTargets = [];
       if ($microarticles = $articleFormatted->microArticles) {
         foreach ($microarticles as $microarticle) {
           $entity = BorgerdkMicroarticle::loadByBorgerdkId($microarticle->id);
@@ -207,36 +207,32 @@ class BorgerdkArticleSource extends SourcePluginBase implements ConfigurableInte
             'value' => $microarticle->content,
             'format' => 'basic_html',
           ]);
-          $entity->set('weight', $weight);
-          $weight++;
-
-          // If Borger.dk article is already present, set is as parent.
-          if ($borgerdkArticle) {
-            $entity->set('os2web_borgerdk_article_id', $borgerdkArticle->id());
-          }
+          $entity->set('source', 'Borger.dk');
 
           $entity->save();
           // Unsetting this microarticle form the list of previously imported
           // microarticles.
           unset($prevArticleMicroarticlesToDelete[$entity->id()]);
 
-          // If Borger.dk article is not present, save this microarticle.
-          // It will be processed in
-          // os2web_borgerdk_os2web_borgerdk_article_insert().
-          if (!$borgerdkArticle) {
-            $mas = $row->getDestinationProperty('migrate_article_microarticles');
-            $mas[$entity->id()] = $entity;
-            $row->setDestinationProperty('migrate_article_microarticles', $mas);
-          }
-
           // Saving microarticles to quickly find if any selfservice is
           // related with it.
           $articleMicroarticles[$microarticle->headline] = $entity;
+
+          $microarticleTargets[] = ['target_id' => $entity->id()];
+        }
+      }
+      // Putting custom MM to the end.
+      if ($borgerdkArticle) {
+        $customMaIds = $borgerdkArticle->getMicroarticles(FALSE, ['uid' => [0, '<>']]);
+        foreach ($customMaIds as $id) {
+          $microarticleTargets[] = ['target_id' => $id];
         }
       }
 
+      $row->setSourceProperty('article_microarticle_targets', $microarticleTargets);
+
       // Creating/updating selfservices.
-      $weight = 0;
+      $selfserviceTargets = [];
       if ($selfservices = $articleFormatted->selfServiceLinks) {
         foreach ($selfservices as $selfservice) {
           $entity = BorgerdkSelfservice::loadByBorgerdkId($selfservice->id);
@@ -255,36 +251,34 @@ class BorgerdkArticleSource extends SourcePluginBase implements ConfigurableInte
           $entity->setTitle($selfservice->title);
           $entity->set('label', $selfservice->label);
           $entity->set('selfserviceUrl', $selfservice->url);
-          $entity->set('weight', $weight);
-          $weight++;
-
-          // Check if we have a microarticle with the similar title.
-          $relatedMaName = preg_replace('/(Start\s)/i', '', $selfservice->title);
-          if (array_key_exists($relatedMaName, $articleMicroarticles)) {
-            $relatedMicroarticle = $articleMicroarticles[$relatedMaName];
-            $entity->set('os2web_borgerdk_microarticle_id', $relatedMicroarticle->id());
-          }
-
-          // If Borger.dk article is already present, set is as parent.
-          if ($borgerdkArticle) {
-            $entity->set('os2web_borgerdk_article_id', $borgerdkArticle->id());
-          }
+          $entity->set('source', 'Borger.dk');
 
           $entity->save();
+
           // Unsetting this selfservice form the list of previously imported
           // selfservices.
           unset($prevArticleSelfservicesToDelete[$entity->id()]);
 
-          // If Borger.dk article is not present, save this selfservice.
-          // It will be processed in
-          // os2web_borgerdk_os2web_borgerdk_article_insert().
-          if (!$borgerdkArticle) {
-            $ss = $row->getDestinationProperty('migrate_article_selfservices');
-            $ss[$entity->id()] = $entity;
-            $row->setDestinationProperty('migrate_article_selfservices', $ss);
+          // Check if we have a microarticle with the similar title.
+          $relatedMaName = preg_replace('/(Start\s)/i', '', $selfservice->title);
+          if (array_key_exists($relatedMaName, $articleMicroarticles)) {
+            /** @var \Drupal\os2web_borgerdk\BorgerdkMicroarticleInterface $relatedMicroarticle */
+            $relatedMicroarticle = $articleMicroarticles[$relatedMaName];
+            $relatedMicroarticle->addSelfservice($entity);
           }
+
+          $selfserviceTargets[] = ['target_id' => $entity->id()];
         }
       }
+      // Putting custom SS to the end.
+      if ($borgerdkArticle) {
+        $customSsIds = $borgerdkArticle->getSelfservices(FALSE, ['uid' => [0, '<>']]);
+        foreach ($customSsIds as $id) {
+          $selfserviceTargets[] = ['target_id' => $id];
+        }
+      }
+
+      $row->setSourceProperty('article_selfservice_targets', $selfserviceTargets);
 
       // Deleting microarticles that are still in the list - the are no longer
       // present in article.
@@ -481,8 +475,8 @@ class BorgerdkArticleSource extends SourcePluginBase implements ConfigurableInte
     }
 
     // Composing search/replace.
-    $search = array('!article_title', '!entities');
-    $replace = array($article->label(), $affectedEntitiesHtml);
+    $search = ['!article_title', '!entities'];
+    $replace = [$article->label(), $affectedEntitiesHtml];
 
     // Making replacements.
     $subject = str_replace($search, $replace, $subject_template);

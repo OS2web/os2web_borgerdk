@@ -14,8 +14,14 @@ class BorgerdkArticleForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
-
+    /** @var \Drupal\os2web_borgerdk\BorgerdkArticleInterface $entity */
     $entity = $this->getEntity();
+
+    // Setting source.
+    if ($entity->isNew()) {
+      $entity->setSource('Manual');
+    }
+
     $result = $entity->save();
     $link = $entity->toLink($this->t('View'))->toRenderable();
 

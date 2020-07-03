@@ -1,0 +1,41 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.os2web_borgerdk_selfser_ref.field_os2web_bdk_selfser_ref
+    - field.field.paragraph.os2web_borgerdk_selfser_ref.field_os2web_bdk_selfser_ref_h
+    - field.field.paragraph.os2web_borgerdk_selfser_ref.field_os2web_bdk_selfser_ref_sh
+    - paragraphs.paragraphs_type.os2web_borgerdk_selfser_ref
+  enforced:
+    module:
+      - os2web_borgerdk
+id: paragraph.os2web_borgerdk_selfser_ref.default
+targetEntityType: paragraph
+bundle: os2web_borgerdk_selfser_ref
+mode: default
+content:
+  field_os2web_bdk_selfser_ref:
+    weight: 2
+    label: above
+    settings:
+      view_mode: link
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_entity_view
+    region: content
+  field_os2web_bdk_selfser_ref_h:
+    weight: 0
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_os2web_bdk_selfser_ref_sh:
+    weight: 1
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+hidden: {  }

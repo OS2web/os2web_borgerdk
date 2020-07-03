@@ -55,58 +55,58 @@ class SettingsForm extends ConfigFormBase {
     ];
 
     // Obsolete articles notification.
-    $form['notification_details'] = array(
+    $form['notification_details'] = [
       '#type' => 'details',
       '#title' => t('Obsolete articles notification settings'),
-    );
-    $form['notification_details']['obsolete_notification_enabled'] = array(
+    ];
+    $form['notification_details']['obsolete_notification_enabled'] = [
       '#type' => 'checkbox',
       '#title' => t('Send notification about obsolete Borger.dk articles'),
       '#default_value' => $this->config(SettingsForm::$configName)->get('obsolete_notification_enabled'),
-    );
+    ];
 
-    $form['notification_details']['obsolete_notification_recipients'] = array(
+    $form['notification_details']['obsolete_notification_recipients'] = [
       '#type' => 'textfield',
       '#title' => t('Recipient(s) of the email'),
       '#description' => t('Example: email@example.com, anotheremail@test.com'),
       '#default_value' => $this->config(SettingsForm::$configName)->get('obsolete_notification_recipients'),
-      '#states' => array(
-        'visible' => array(
-          ':input[name="obsolete_notification_enabled"]' => array('checked' => TRUE),
-        ),
-      ),
-    );
+      '#states' => [
+        'visible' => [
+          ':input[name="obsolete_notification_enabled"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
 
-    $form['notification_details']['obsolete_notification_email_subject'] = array(
+    $form['notification_details']['obsolete_notification_email_subject'] = [
       '#type' => 'textfield',
       '#title' => t('Email subject'),
       '#default_value' => $this->config(SettingsForm::$configName)->get('obsolete_notification_email_subject'),
-      '#states' => array(
-        'visible' => array(
-          ':input[name="obsolete_notification_enabled"]' => array('checked' => TRUE),
-        ),
-      ),
-    );
-    $form['notification_details']['obsolete_reminder_email_body'] = array(
+      '#states' => [
+        'visible' => [
+          ':input[name="obsolete_notification_enabled"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+    $form['notification_details']['obsolete_reminder_email_body'] = [
       '#type' => 'textarea',
       '#title' => t('Email body'),
       '#default_value' => $this->config(SettingsForm::$configName)->get('obsolete_notification_email_body'),
-      '#states' => array(
-        'visible' => array(
-          ':input[name="obsolete_notification_enabled"]' => array('checked' => TRUE),
-        ),
-      ),
-    );
+      '#states' => [
+        'visible' => [
+          ':input[name="obsolete_notification_enabled"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
 
-    $form['notification_details']['obsolete_notification_email_tokens'] = array(
+    $form['notification_details']['obsolete_notification_email_tokens'] = [
       '#title' => t('Available variables'),
       '#type' => 'details',
-      '#states' => array(
-        'visible' => array(
-          ':input[name="obsolete_notification_enabled"]' => array('checked' => TRUE),
-        ),
-      ),
-    );
+      '#states' => [
+        'visible' => [
+          ':input[name="obsolete_notification_enabled"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
 
     $form['notification_details']['obsolete_notification_email_tokens'][] = [
       '#markup' => '<p>' . t('Can be used both in subject and body:') . '</p>

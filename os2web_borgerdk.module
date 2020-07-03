@@ -10,7 +10,7 @@ use Drupal\Core\Render\Element;
 /**
  * Implements hook_theme().
  */
-function os2web_borgerdk_theme() {
+function os2web_borgerdk_theme($existing, $type, $theme, $path) {
   return [
     'os2web_borgerdk_article' => [
       'render element' => 'elements',
@@ -19,6 +19,9 @@ function os2web_borgerdk_theme() {
       'render element' => 'elements',
     ],
     'os2web_borgerdk_selfservice' => [
+      'render element' => 'elements',
+    ],
+    'os2web_borgerdk_selfservice__link' => [
       'render element' => 'elements',
     ],
   ];
@@ -116,12 +119,12 @@ function template_preprocess_os2web_borgerdk_selfservice(array &$variables) {
  */
 function os2web_borgerdk_theme_suggestions_os2web_borgerdk_selfservice(array $variables) {
   $suggestions = [];
-  $microarticle = $variables['elements']['#os2web_borgerdk_selfservice'];
+  $selfservice = $variables['elements']['#os2web_borgerdk_selfservice'];
   $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
 
   $suggestions[] = 'os2web_borgerdk_selfservice__' . $sanitized_view_mode;
-  $suggestions[] = 'os2web_borgerdk_selfservice__' . $microarticle->id();
-  $suggestions[] = 'os2web_borgerdk_selfservice__' . $microarticle->id() . '__' . $sanitized_view_mode;
+  $suggestions[] = 'os2web_borgerdk_selfservice__' . $selfservice->id();
+  $suggestions[] = 'os2web_borgerdk_selfservice__' . $selfservice->id() . '__' . $sanitized_view_mode;
 
   return $suggestions;
 }

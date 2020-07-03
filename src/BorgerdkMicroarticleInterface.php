@@ -8,25 +8,6 @@ namespace Drupal\os2web_borgerdk;
 interface BorgerdkMicroarticleInterface extends BorgerdkContentInterface {
 
   /**
-   * Gets the borger.dk microarticle weight.
-   *
-   * @return int
-   *   Weight of the borger.dk microarticle.
-   */
-  public function getWeight();
-
-  /**
-   * Sets the borger.dk microarticle weight.
-   *
-   * @param int $weight
-   *   New microarticle weight.
-   *
-   * @return \Drupal\os2web_borgerdk\BorgerdkMicroarticleInterface
-   *   The called borger.dk microarticle.
-   */
-  public function setWeight($weight);
-
-  /**
    * Gets the borger.dk microarticle content.
    *
    * @return string
@@ -69,5 +50,18 @@ interface BorgerdkMicroarticleInterface extends BorgerdkContentInterface {
    *   If field is empty, empty array is returned.
    */
   public function getSelfservices($load = TRUE);
+
+  /**
+   * Adds the selfservice to this microarticle.
+   *
+   * Only does so if the selfservice is not already added.
+   * Saves the microarticle as well.
+   *
+   * @param \Drupal\os2web_borgerdk\BorgerdkSelfserviceInterface $selfservice
+   *   Selfservice to add.
+   * @param bool $save
+   *   If bullet point needs to be saved right away.
+   */
+  public function addSelfservice(BorgerdkSelfserviceInterface $selfservice, $save = TRUE);
 
 }
