@@ -87,7 +87,7 @@ class BorgerdkArticleReferenceWidget extends OptionsWidgetBase {
       'author' => $this
         ->t('Author'),
     ];
-    $element['microarticle_ids'] = array(
+    $element['microarticle_ids'] = [
       '#type' => 'tableselect',
       '#header' => $microarticlesHeader,
       '#options' => ($selectedArticle) ? $this->generateMicroarticleOptions($selectedArticle) : [],
@@ -95,7 +95,7 @@ class BorgerdkArticleReferenceWidget extends OptionsWidgetBase {
       '#empty' => $this
         ->t('No microarticles found'),
       '#weight' => 1,
-    );
+    ];
 
     // Adding select selfservices.
     $selfservicesHeader = [
@@ -106,7 +106,7 @@ class BorgerdkArticleReferenceWidget extends OptionsWidgetBase {
       'author' => $this
         ->t('Author'),
     ];
-    $element['selfservice_ids'] = array(
+    $element['selfservice_ids'] = [
       '#type' => 'tableselect',
       '#header' => $selfservicesHeader,
       '#options' => ($selectedArticle) ? $this->generateSelfServiceOptions($selectedArticle) : [],
@@ -114,7 +114,7 @@ class BorgerdkArticleReferenceWidget extends OptionsWidgetBase {
       '#empty' => $this
         ->t('No selfservices found'),
       '#weight' => 2,
-    );
+    ];
 
     return $element;
   }

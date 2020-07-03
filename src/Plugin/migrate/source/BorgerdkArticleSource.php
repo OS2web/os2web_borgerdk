@@ -475,8 +475,8 @@ class BorgerdkArticleSource extends SourcePluginBase implements ConfigurableInte
     }
 
     // Composing search/replace.
-    $search = array('!article_title', '!entities');
-    $replace = array($article->label(), $affectedEntitiesHtml);
+    $search = ['!article_title', '!entities'];
+    $replace = [$article->label(), $affectedEntitiesHtml];
 
     // Making replacements.
     $subject = str_replace($search, $replace, $subject_template);
