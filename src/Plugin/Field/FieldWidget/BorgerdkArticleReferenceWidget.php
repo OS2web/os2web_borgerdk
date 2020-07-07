@@ -53,7 +53,7 @@ class BorgerdkArticleReferenceWidget extends OptionsWidgetBase {
 
     $wrapperId = implode('-', $element['#field_parents']) . "$fieldName-container-$delta";
     $articleOptions = $this->getOptions($items->getEntity());
-    sort($articleOptions);
+    asort($articleOptions);
 
     $select += [
       '#type' => 'select',
@@ -68,6 +68,7 @@ class BorgerdkArticleReferenceWidget extends OptionsWidgetBase {
 
     $element += [
       '#type' => 'details',
+      '#open' => TRUE,
     ];
     $element['target_id'] = $select;
     $element['#attributes']['id'] = $wrapperId;
