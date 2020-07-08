@@ -7,12 +7,23 @@
 
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\user\Entity\Role;
 
 /**
  * Implements hook_install().
  */
 function os2web_borgerdk_install() {
   \Drupal::messenger()->addStatus(__FUNCTION__);
+
+  // Adding access to content for anonymous user.
+  $anonym = Role::load('anonymous');
+  $anonym->grantPermission('view os2web_borgerdk content');
+  $anonym->save();
+
+  // Adding comments permissions for authenticated user.
+  $authenticated = Role::load('authenticated');
+  $authenticated->grantPermission('view os2web_borgerdk content');
+  $authenticated->save();
 }
 
 /**
@@ -66,4 +77,21 @@ function os2web_borgerdk_update_8001() {
 
   \Drupal::entityDefinitionUpdateManager()
     ->installFieldStorageDefinition('source', 'os2web_borgerdk_selfservice', 'os2web_borgerdk_selfservice', $storage_definition);
+}
+
+/**
+ * Implements hook_update_N().
+ *
+ * Adding permissions for viewing content.
+ */
+function os2web_borgerdk_update_8002() {
+  // Adding access to content for anonymous user.
+  $anonym = Role::load('anonymous');
+  $anonym->grantPermission('view os2web_borgerdk content');
+  $anonym->save();
+
+  // Adding access to content for authenticated user.
+  $authenticated = Role::load('authenticated');
+  $authenticated->grantPermission('view os2web_borgerdk content');
+  $authenticated->save();
 }
