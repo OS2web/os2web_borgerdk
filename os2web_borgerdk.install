@@ -7,6 +7,7 @@
 
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\field\Entity\FieldConfig;
 use Drupal\user\Entity\Role;
 
 /**
@@ -94,4 +95,96 @@ function os2web_borgerdk_update_8002() {
   $authenticated = Role::load('authenticated');
   $authenticated->grantPermission('view os2web_borgerdk content');
   $authenticated->save();
+}
+
+/**
+ * Implements hook_update_N().
+ *
+ * Adding description for selfservice.
+ */
+function os2web_borgerdk_update_8003() {
+  $storage_definition = BaseFieldDefinition::create('text_long')
+    ->setLabel(t('Description'))
+    ->setDescription(t('The description of the self-service.'))
+    ->setDisplayOptions('form', [
+      'type' => 'text_textarea',
+      'weight' => 1,
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayOptions('view', [
+      'type' => 'text_default',
+      'label' => 'above',
+      'weight' => -5,
+    ])
+    ->setDisplayConfigurable('view', TRUE);
+
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('description', 'os2web_borgerdk_selfservice', 'os2web_borgerdk_selfservice', $storage_definition);
+}
+
+/**
+ * Implements hook_update_N().
+ *
+ * Change selfservice title type to textarea.
+ */
+function os2web_borgerdk_update_8004() {
+  $entity_type_manager = \Drupal::entityTypeManager();
+  $bundle_of = 'os2web_borgerdk_selfservice';
+
+  $storage = $entity_type_manager->getStorage($bundle_of);
+  $bundle_definition = $entity_type_manager->getDefinition($bundle_of);
+  // Sometimes the primary key isn't 'id'. e.g. 'eid' or 'item_id'.
+  $id_key = $bundle_definition->getKey('id');
+
+  // If there is no data table defined then use the base table.
+  $table_name = $storage->getDataTable() ?: $storage->getBaseTable();
+  $database = \Drupal::database();
+  $definition_manager = \Drupal::entityDefinitionUpdateManager();
+
+  // Store the existing values.
+  $title_values = $database->select($table_name)
+    ->fields($table_name, [$id_key, 'title'])
+    ->execute()
+    ->fetchAllKeyed();
+
+  // Clear out the values.
+  $database->update($table_name)
+    ->fields(['title' => NULL])
+    ->execute();
+
+  // Uninstall the field.
+  $field_storage_definition = $definition_manager->getFieldStorageDefinition('title', $bundle_of);
+  $definition_manager->uninstallFieldStorageDefinition($field_storage_definition);
+
+  // Create a new field definition.
+  $new_title_field = BaseFieldDefinition::create('text_long')
+    ->setLabel(t('Title'))
+    ->setDescription(t('The title of the Borger.dk content entity.'))
+    ->setDisplayOptions('form', [
+      'type' => 'text_textarea',
+      'weight' => 0,
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayOptions('view', [
+      'type' => 'text_default',
+      'label' => 'above',
+      'weight' => -20,
+    ])
+    ->setDisplayConfigurable('view', TRUE);
+
+  // Install the new definition.
+  $definition_manager->installFieldStorageDefinition('title', $bundle_of, $bundle_of, $new_title_field);
+
+  // Restore the values.
+  foreach ($title_values as $id => $value) {
+    $database->update($table_name)
+      ->fields([
+        'title__value' => $value,
+        'title__format' => 'wysiwyg_tekst',
+      ])
+      ->condition($id_key, $id)
+      ->execute();
+  }
+
+
 }

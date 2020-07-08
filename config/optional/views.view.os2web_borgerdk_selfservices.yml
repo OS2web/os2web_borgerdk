@@ -1,12 +1,11 @@
-langcode: en
+langcode: da
 status: true
 dependencies:
   module:
     - os2web_borgerdk
-_core:
-  default_config_hash: OIB7ZasH4nVKRXIyusUoKH93IzBFmbRGtHiBJ2loeVw
+    - text
 id: os2web_borgerdk_selfservices
-label: 'OS2Web Borger.dk Selfservices'
+label: "Borger.dk\_selvbetjeninger"
 module: views
 description: 'Find and manage OS2Web Borger.dk selfservices.'
 tag: OS2Web
@@ -36,13 +35,13 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: Apply
+          submit_button: Udfør
           reset_button: false
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
+          reset_button_label: Gendan
+          exposed_sorts_label: 'Sortér efter'
           expose_sort_order: true
-          sort_asc_label: Asc
-          sort_desc_label: Desc
+          sort_asc_label: Stigende
+          sort_desc_label: Faldende
       pager:
         type: full
         options:
@@ -53,16 +52,16 @@ display:
           tags:
             previous: ‹‹
             next: ››
-            first: '« First'
-            last: 'Last »'
+            first: '« Første'
+            last: 'Sidste »'
           expose:
             items_per_page: false
-            items_per_page_label: 'Items per page'
+            items_per_page_label: 'Antal elementer'
             items_per_page_options: '5, 10, 25, 50'
             items_per_page_options_all: false
-            items_per_page_options_all_label: '- All -'
+            items_per_page_options_all_label: '- Alle -'
             offset: false
-            offset_label: Offset
+            offset_label: Forskydning
           quantity: 9
       style:
         type: table
@@ -76,22 +75,15 @@ display:
           summary: ''
           description: ''
           columns:
-            borgerdk_id: borgerdk_id
-            title: title
+            title__value: title__value
             lang: lang
+            source: source
             uid: uid
             status: status
             changed: changed
             operations: operations
           info:
-            borgerdk_id:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: priority-low
-            title:
+            title__value:
               sortable: true
               default_sort_order: asc
               align: ''
@@ -105,6 +97,13 @@ display:
               separator: ''
               empty_column: false
               responsive: priority-medium
+            source:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
             uid:
               sortable: false
               default_sort_order: asc
@@ -136,14 +135,14 @@ display:
       row:
         type: fields
       fields:
-        title:
-          id: title
+        title__value:
+          id: title__value
           table: os2web_borgerdk_selfservice
-          field: title
+          field: title__value
           relationship: none
           group_type: group
           admin_label: ''
-          label: Title
+          label: Titel
           exclude: false
           alter:
             alter_text: false
@@ -185,9 +184,8 @@ display:
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: true
+          type: text_default
+          settings: {  }
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -198,7 +196,7 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: null
+          entity_type: os2web_borgerdk_selfservice
           entity_field: title
           plugin_id: field
         lang:
@@ -273,7 +271,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Source
+          label: Kilde
           exclude: false
           alter:
             alter_text: false
@@ -338,7 +336,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Author
+          label: Forfatter
           exclude: false
           alter:
             alter_text: false
@@ -448,8 +446,8 @@ display:
           type: boolean
           settings:
             format: custom
-            format_custom_true: Published
-            format_custom_false: Unpublished
+            format_custom_true: Udgivet
+            format_custom_false: 'Ikke udgivet'
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -470,7 +468,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Updated
+          label: Opdateret
           exclude: false
           alter:
             alter_text: false
@@ -537,7 +535,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Operations
+          label: Handlinger
           exclude: false
           alter:
             alter_text: false
@@ -582,10 +580,10 @@ display:
           entity_type: os2web_borgerdk_selfservice
           plugin_id: entity_operations
       filters:
-        title:
-          id: title
+        title__value:
+          id: title__value
           table: os2web_borgerdk_selfservice
-          field: title
+          field: title__value
           relationship: none
           group_type: group
           admin_label: ''
@@ -594,11 +592,11 @@ display:
           group: 1
           exposed: true
           expose:
-            operator_id: title_op
-            label: Title
+            operator_id: title__value_op
+            label: Titel
             description: ''
             use_operator: false
-            operator: title_op
+            operator: title__value_op
             operator_limit_selection: false
             operator_list: {  }
             identifier: title
@@ -652,7 +650,7 @@ display:
               authenticated: authenticated
           is_grouped: true
           group_info:
-            label: 'Published status'
+            label: Publiceringsstatus
             description: ''
             identifier: status
             optional: true
@@ -663,18 +661,18 @@ display:
             default_group_multiple: {  }
             group_items:
               1:
-                title: Published
+                title: Udgivet
                 operator: '='
                 value: '1'
               2:
-                title: Unpublished
+                title: 'Ikke udgivet'
                 operator: '='
                 value: '0'
           entity_type: os2web_borgerdk_selfservice
           entity_field: status
           plugin_id: boolean
       sorts: {  }
-      title: 'OS2Web Borger.dk Selfservices'
+      title: "Borger.dk\_selvbetjeninger"
       header: {  }
       footer: {  }
       empty: {  }
@@ -696,7 +694,7 @@ display:
   page_1:
     display_plugin: page
     id: page_1
-    display_title: Page
+    display_title: Side
     position: 1
     display_options:
       display_extenders: {  }

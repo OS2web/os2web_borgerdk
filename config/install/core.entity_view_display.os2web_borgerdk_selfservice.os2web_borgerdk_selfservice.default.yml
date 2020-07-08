@@ -1,0 +1,89 @@
+langcode: da
+status: true
+dependencies:
+  module:
+    - os2web_borgerdk
+    - text
+    - user
+id: os2web_borgerdk_selfservice.os2web_borgerdk_selfservice.default
+targetEntityType: os2web_borgerdk_selfservice
+bundle: os2web_borgerdk_selfservice
+mode: default
+content:
+  created:
+    label: above
+    type: timestamp
+    weight: 22
+    region: content
+    settings:
+      date_format: medium
+      custom_date_format: ''
+      timezone: ''
+    third_party_settings: {  }
+  description:
+    type: text_trimmed
+    label: hidden
+    weight: -5
+    region: content
+    settings:
+      trim_length: 150
+    third_party_settings: {  }
+  label:
+    label: hidden
+    type: string
+    weight: -5
+    region: content
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  lang:
+    label: above
+    type: string
+    weight: 21
+    region: content
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  selfserviceUrl:
+    label: hidden
+    type: string
+    weight: -5
+    region: content
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  source:
+    label: above
+    type: string
+    weight: 21
+    region: content
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  status:
+    type: boolean
+    label: above
+    weight: 20
+    settings:
+      format: enabled-disabled
+      format_custom_false: ''
+      format_custom_true: ''
+    region: content
+    third_party_settings: {  }
+  title:
+    label: hidden
+    type: string
+    weight: -20
+    region: content
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  uid:
+    label: above
+    type: author
+    weight: 21
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  search_api_excerpt: true

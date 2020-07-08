@@ -53,6 +53,22 @@ class BorgerdkSelfservice extends BorgerdkContent implements BorgerdkSelfservice
 
     $fields = parent::baseFieldDefinitions($entity_type);
 
+    // Overriding default title field.
+    $fields['title'] = BaseFieldDefinition::create('text_long')
+      ->setLabel(t('Title'))
+      ->setDescription(t('The title of the Borger.dk content entity.'))
+      ->setDisplayOptions('form', [
+        'type' => 'text_textarea',
+        'weight' => 0,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayOptions('view', [
+        'type' => 'text_default',
+        'label' => 'above',
+        'weight' => -20,
+      ])
+      ->setDisplayConfigurable('view', TRUE);
+
     // Borger.dk - ID field.
     $fields['borgerdk_id'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Borger.dk ID'))
@@ -93,6 +109,22 @@ class BorgerdkSelfservice extends BorgerdkContent implements BorgerdkSelfservice
       ])
       ->setDisplayConfigurable('view', TRUE);
 
+    // Selfservice description field.
+    $fields['description'] = BaseFieldDefinition::create('text_long')
+      ->setLabel(t('Description'))
+      ->setDescription(t('The description of the self-service.'))
+      ->setDisplayOptions('form', [
+        'type' => 'text_textarea',
+        'weight' => 1,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayOptions('view', [
+        'type' => 'text_default',
+        'label' => 'above',
+        'weight' => -5,
+      ])
+      ->setDisplayConfigurable('view', TRUE);
+
     return $fields;
   }
 
@@ -118,6 +150,13 @@ class BorgerdkSelfservice extends BorgerdkContent implements BorgerdkSelfservice
     }
 
     return NULL;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function label() {
+    return strip_tags(parent::label());
   }
 
 }

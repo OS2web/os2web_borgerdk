@@ -115,6 +115,25 @@ function template_preprocess_os2web_borgerdk_selfservice(array &$variables) {
 }
 
 /**
+ * Prepares variables for borger.dk selfservice templates.
+ *
+ * Default template: os2web-borgerdk-selfservice--link.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An associative array containing the borger.dk selfservice
+ *     information and any fields attached to the entity.
+ *   - attributes: HTML attributes for the containing element.
+ *   - view_mode: View mode; e.g., 'full', 'field_reference', etc.
+ */
+function template_preprocess_os2web_borgerdk_selfservice__link(array &$variables) {
+  foreach (Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+  $variables['view_mode'] = $variables['elements']['#view_mode'];
+}
+
+/**
  * Implements hook_theme_suggestions_HOOK().
  */
 function os2web_borgerdk_theme_suggestions_os2web_borgerdk_selfservice(array $variables) {

@@ -1,0 +1,20 @@
+langcode: da
+status: true
+dependencies: {  }
+id: os2web_borgerdk
+label: 'OS2Web Borger.dk'
+description: ''
+folder: modules/contrib/os2web_borgerdk/config/install
+module: {  }
+theme: {  }
+blacklist:
+  - 'os2web_borgerdk*'
+  - '*os2web_borgerdk'
+  - '*os2web_borgerdk*'
+  - 'os2web_bdk*'
+  - '*os2web_bdk'
+  - '*os2web_bdk*'
+graylist: {  }
+graylist_dependents: true
+graylist_skip_equal: true
+weight: 0

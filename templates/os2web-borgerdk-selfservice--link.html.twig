@@ -18,5 +18,8 @@
 {% set entity = elements['#os2web_borgerdk_selfservice'] %}
 
 <article{{ attributes }}>
-  <a target="_blank" href="{{ entity.selfserviceUrl.value }}" title="{{ entity.label.value }}">{{ entity.title.value }}</a>
+  <a target="_blank" href="{{ entity.selfserviceUrl.value }}" title="{{ entity.label.value }}">
+    {{ content.title }}
+    {{ content.description }}
+  </a>
 </article>
