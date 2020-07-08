@@ -31,7 +31,6 @@ use Drupal\os2web_borgerdk\BorgerdkSelfserviceInterface;
  *   admin_permission = "administer os2web_borgerdk content",
  *   entity_keys = {
  *     "id" = "id",
- *     "label" = "title",
  *     "uuid" = "uuid"
  *   },
  *   links = {
@@ -153,10 +152,17 @@ class BorgerdkSelfservice extends BorgerdkContent implements BorgerdkSelfservice
   }
 
   /**
-   * {@inheritdoc}
+   * Gets the label of the entity.
+   *
+   * As the label for this entity is a complex field, in order to make
+   * autocomplete work properly we need to omit setting it in the entity keys.
+   * And since it is done, a custom implementation of label method is needed.
+   *
+   * @return string|null
+   *   The label of the entity, or NULL if there is no label defined.
    */
   public function label() {
-    return strip_tags(parent::label());
+    return strip_tags($this->get('title')->value);
   }
 
 }
