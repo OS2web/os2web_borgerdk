@@ -185,6 +185,39 @@ function os2web_borgerdk_update_8004() {
       ->condition($id_key, $id)
       ->execute();
   }
-
-
 }
+
+/**
+ * Implements hook_update_N().
+ *
+ * Adding selfservice category field.
+ */
+function os2web_borgerdk_update_8005() {
+  $storage_definition = BaseFieldDefinition::create('entity_reference')
+    ->setLabel(t('Category'))
+    ->setDescription(t('Borger.dk selfservice category'))
+    ->setSetting('target_type', 'taxonomy_term')
+    ->setSetting('handler', 'default:taxonomy_term')
+    ->setSetting('handler_settings',
+      [
+        'target_bundles' => [
+          'os2web_borgerdk_selfservice_cat' => 'os2web_borgerdk_selfservice_cat',
+        ],
+      ])
+    ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
+    ->setDisplayOptions('form', [
+      'type' => 'entity_reference_autocomplete',
+      'weight' => 5,
+      'settings' => [
+        'match_operator' => 'CONTAINS',
+        'size' => '60',
+        'autocomplete_type' => 'tags',
+        'placeholder' => '',
+      ],
+    ])
+    ->setDisplayConfigurable('form', TRUE);
+
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('category', 'os2web_borgerdk_selfservice', 'os2web_borgerdk_selfservice', $storage_definition);
+}
+

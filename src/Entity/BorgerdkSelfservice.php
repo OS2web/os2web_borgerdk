@@ -4,6 +4,7 @@ namespace Drupal\os2web_borgerdk\Entity;
 
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\os2web_borgerdk\BorgerdkSelfserviceInterface;
 
 /**
@@ -123,6 +124,31 @@ class BorgerdkSelfservice extends BorgerdkContent implements BorgerdkSelfservice
         'weight' => -5,
       ])
       ->setDisplayConfigurable('view', TRUE);
+
+    // Selfservice category reference field.
+    $fields['category'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Category'))
+      ->setDescription(t('Borger.dk selfservice category'))
+      ->setSetting('target_type', 'taxonomy_term')
+      ->setSetting('handler', 'default:taxonomy_term')
+      ->setSetting('handler_settings',
+        [
+          'target_bundles' => [
+            'os2web_borgerdk_selfservice_cat' => 'os2web_borgerdk_selfservice_cat',
+          ],
+        ])
+      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
+      ->setDisplayOptions('form', [
+        'type' => 'entity_reference_autocomplete',
+        'weight' => 5,
+        'settings' => [
+          'match_operator' => 'CONTAINS',
+          'size' => '60',
+          'autocomplete_type' => 'tags',
+          'placeholder' => '',
+        ],
+      ])
+      ->setDisplayConfigurable('form', TRUE);
 
     return $fields;
   }

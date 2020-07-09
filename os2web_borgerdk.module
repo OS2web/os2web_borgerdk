@@ -161,3 +161,28 @@ function os2web_borgerdk_mail($key, &$message, $params) {
       break;
   }
 }
+
+/**
+ * Implements hook_preprocess_paragraph().
+ *
+ * Adding selfservice categories view into paragraph.
+ */
+function os2web_borgerdk_preprocess_paragraph__os2web_borgerdk_selfservice_cats(&$variables) {
+  $variables['content'] = views_embed_view('os2web_borgerdk_selfservice_cats', 'os2web_borgerdk_embed_selfservice_cats');
+}
+
+/**
+ * Implements hook_preprocess_taxonomy_term().
+ *
+ * Adding all category selfservices.
+ */
+function os2web_borgerdk_preprocess_taxonomy_term__os2web_borgerdk_selfservice_cat(&$variables) {
+  /** @var \Drupal\taxonomy\TermInterface $term */
+  $term = $variables['term'];
+  $view_mode = $variables['view_mode'];
+
+  if ($view_mode == 'full') {
+    $variables['content']['selfservices'] = views_embed_view('os2web_borgerdk_selfservices', 'os2web_borgerdk_selfservices_embed_category_ss', $term->id());
+  }
+}
+

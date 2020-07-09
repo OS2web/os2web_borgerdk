@@ -1,6 +1,8 @@
 langcode: da
 status: true
 dependencies:
+  config:
+    - core.entity_view_mode.os2web_borgerdk_selfservice.link
   module:
     - os2web_borgerdk
     - text
@@ -690,6 +692,143 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+      tags: {  }
+  os2web_borgerdk_selfservices_embed_category_ss:
+    display_plugin: embed
+    id: os2web_borgerdk_selfservices_embed_category_ss
+    display_title: Embed
+    position: 2
+    display_options:
+      display_extenders: {  }
+      style:
+        type: default
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+      defaults:
+        style: false
+        row: false
+        arguments: false
+        filters: false
+        filter_groups: false
+        sorts: false
+        pager: false
+        empty: false
+      row:
+        type: 'entity:os2web_borgerdk_selfservice'
+        options:
+          relationship: none
+          view_mode: link
+      arguments:
+        category_target_id:
+          id: category_target_id
+          table: os2web_borgerdk_selfservice__category
+          field: category_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          default_action: empty
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: fixed
+          default_argument_options:
+            argument: ''
+          default_argument_skip_url: false
+          summary_options:
+            base_path: ''
+            count: true
+            items_per_page: 25
+            override: false
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: false
+          validate:
+            type: none
+            fail: 'not found'
+          validate_options: {  }
+          break_phrase: false
+          not: false
+          entity_type: os2web_borgerdk_selfservice
+          entity_field: category
+          plugin_id: numeric
+      filters:
+        status:
+          id: status
+          table: os2web_borgerdk_selfservice
+          field: status
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: '1'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: os2web_borgerdk_selfservice
+          entity_field: status
+          plugin_id: boolean
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      sorts:
+        title__value:
+          id: title__value
+          table: os2web_borgerdk_selfservice
+          field: title__value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: ASC
+          exposed: false
+          expose:
+            label: ''
+          entity_type: os2web_borgerdk_selfservice
+          entity_field: title
+          plugin_id: standard
+      pager:
+        type: none
+        options:
+          offset: 0
+      empty: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
       tags: {  }
   page_1:
     display_plugin: page
