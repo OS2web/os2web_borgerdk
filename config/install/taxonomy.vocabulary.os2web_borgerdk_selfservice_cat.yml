@@ -1,7 +1,7 @@
 langcode: da
 status: true
 dependencies: {  }
-name: 'OS2Web Selfservice category'
+name: Selvbetjeningskategorier
 vid: os2web_borgerdk_selfservice_cat
 description: ''
 weight: 0
