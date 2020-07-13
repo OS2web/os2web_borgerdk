@@ -16,7 +16,7 @@ mode: default
 content:
   field_os2web_bdk_selfser_ref:
     weight: 2
-    label: above
+    label: hidden
     settings:
       view_mode: link
       link: false
@@ -25,7 +25,7 @@ content:
     region: content
   field_os2web_bdk_selfser_ref_h:
     weight: 0
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
@@ -33,7 +33,7 @@ content:
     region: content
   field_os2web_bdk_selfser_ref_sh:
     weight: 1
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     type: basic_string
