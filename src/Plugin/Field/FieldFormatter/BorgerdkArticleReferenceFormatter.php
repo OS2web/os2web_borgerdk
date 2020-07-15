@@ -45,12 +45,6 @@ class BorgerdkArticleReferenceFormatter extends EntityReferenceEntityFormatter {
 
       $selectedMicroarticleIds = $item->getMicroarticleIdsValue();
       if (!empty($selectedMicroarticleIds)) {
-        $elements[$delta]['microarticles'] = [
-          '#type' => 'html_tag',
-          '#tag' => 'div',
-          '#attributes' => ['class' => 'os2web-borgerdk-microarticles'],
-        ];
-
         $microarticle_view_builder = \Drupal::entityTypeManager()
           ->getViewBuilder('os2web_borgerdk_microarticle');
         $selectedMicroarticles = BorgerdkMicroarticle::loadMultiple($selectedMicroarticleIds);
@@ -61,12 +55,6 @@ class BorgerdkArticleReferenceFormatter extends EntityReferenceEntityFormatter {
 
       $selectedSelfserviceIds = $item->getSelfserviceIdsValue();
       if (!empty($selectedSelfserviceIds)) {
-        $elements[$delta]['selfservices'] = [
-          '#type' => 'html_tag',
-          '#tag' => 'div',
-          '#attributes' => ['class' => 'os2web-borgerdk-selfservices'],
-        ];
-
         $selfservice_view_builder = \Drupal::entityTypeManager()
           ->getViewBuilder('os2web_borgerdk_selfservice');
         $selectedSelfservices = BorgerdkSelfservice::loadMultiple($selectedSelfserviceIds);
