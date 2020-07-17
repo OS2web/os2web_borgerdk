@@ -205,7 +205,7 @@ class BorgerdkArticleSource extends SourcePluginBase implements ConfigurableInte
           $entity->setTitle($microarticle->headline);
           $entity->set('content', [
             'value' => $microarticle->content,
-            'format' => 'basic_html',
+            'format' => 'wysiwyg_tekst',
           ]);
           $entity->set('source', 'Borger.dk');
 

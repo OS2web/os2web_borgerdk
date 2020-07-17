@@ -221,3 +221,30 @@ function os2web_borgerdk_update_8005() {
     ->installFieldStorageDefinition('category', 'os2web_borgerdk_selfservice', 'os2web_borgerdk_selfservice', $storage_definition);
 }
 
+/**
+ * Implements hook_update_N().
+ *
+ * Changes the format of long text fields: article legislation, article
+ * recommendation, microarticle content.
+ */
+function os2web_borgerdk_update_8006() {
+  $database = \Drupal::database();
+
+  // Updating legislation and recommendation formats.
+  $database->update('os2web_borgerdk_article')
+    ->fields([
+      'legislation__format' => 'wysiwyg_tekst',
+      'recommendation__format' => 'wysiwyg_tekst',
+    ])
+    ->execute();
+
+  // Updating content format.
+  $database->update('os2web_borgerdk_microarticle')
+    ->fields([
+      'content__format' => 'wysiwyg_tekst',
+    ])
+    ->execute();
+}
+
+
+

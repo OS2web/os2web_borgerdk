@@ -29,11 +29,11 @@ process:
   legislation/value: legislation
   legislation/format:
     plugin: default_value
-    default_value: basic_html
+    default_value: wysiwyg_tekst
   recommendation/value: recommendation
   recommendation/format:
     plugin: default_value
-    default_value: basic_html
+    default_value: wysiwyg_tekst
   byline: byline
   uid:
     plugin: default_value
