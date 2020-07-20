@@ -32,6 +32,7 @@ use Drupal\os2web_borgerdk\BorgerdkSelfserviceInterface;
  *   admin_permission = "administer os2web_borgerdk content",
  *   entity_keys = {
  *     "id" = "id",
+ *     "label" = "title",
  *     "uuid" = "uuid"
  *   },
  *   links = {
@@ -52,22 +53,6 @@ class BorgerdkSelfservice extends BorgerdkContent implements BorgerdkSelfservice
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
 
     $fields = parent::baseFieldDefinitions($entity_type);
-
-    // Overriding default title field.
-    $fields['title'] = BaseFieldDefinition::create('text_long')
-      ->setLabel(t('Title'))
-      ->setDescription(t('The title of the Borger.dk content entity.'))
-      ->setDisplayOptions('form', [
-        'type' => 'text_textarea',
-        'weight' => 0,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayOptions('view', [
-        'type' => 'text_default',
-        'label' => 'above',
-        'weight' => -20,
-      ])
-      ->setDisplayConfigurable('view', TRUE);
 
     // Borger.dk - ID field.
     $fields['borgerdk_id'] = BaseFieldDefinition::create('string')
@@ -175,20 +160,6 @@ class BorgerdkSelfservice extends BorgerdkContent implements BorgerdkSelfservice
     }
 
     return NULL;
-  }
-
-  /**
-   * Gets the label of the entity.
-   *
-   * As the label for this entity is a complex field, in order to make
-   * autocomplete work properly we need to omit setting it in the entity keys.
-   * And since it is done, a custom implementation of label method is needed.
-   *
-   * @return string|null
-   *   The label of the entity, or NULL if there is no label defined.
-   */
-  public function label() {
-    return strip_tags($this->get('title')->value);
   }
 
 }
