@@ -43,6 +43,14 @@ class BorgerdkArticleReferenceFormatter extends EntityReferenceEntityFormatter {
       /** @var \Drupal\os2web_borgerdk\Plugin\Field\FieldType\BorgerdkArticleReference $item */
       $elements[$delta]['article'] = $renderedArticles[$delta];
 
+      $article_view_builder = \Drupal::entityTypeManager()
+        ->getViewBuilder('os2web_borgerdk_article');
+
+      $article = $item->getArticleValue(TRUE);
+      $elements[$delta]['legislation'] = $article_view_builder->viewField($article->legislation);
+      $elements[$delta]['recommendation'] = $article_view_builder->viewField($article->recommendation);
+      $elements[$delta]['byline'] = $article_view_builder->viewField($article->byline);
+
       $selectedMicroarticleIds = $item->getMicroarticleIdsValue();
       if (!empty($selectedMicroarticleIds)) {
         $microarticle_view_builder = \Drupal::entityTypeManager()
