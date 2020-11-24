@@ -54,6 +54,22 @@ class BorgerdkArticle extends BorgerdkContent implements BorgerdkArticleInterfac
 
     $fields = parent::baseFieldDefinitions($entity_type);
 
+    // PreText
+    $fields['pre_text'] = BaseFieldDefinition::create('text_long')
+      ->setLabel(t('Tekst i toppen'))
+      ->setDescription(t('Tekst i toppen af Borger.dk artikkel'))
+      ->setDisplayOptions('form', [
+        'type' => 'text_textarea',
+        'weight' => -1,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayOptions('view', [
+        'type' => 'text_default',
+        'label' => 'above',
+        'weight' => -1,
+      ])
+      ->setDisplayConfigurable('view', TRUE);
+
     // Borger.dk - ID field.
     $fields['borgerdk_id'] = BaseFieldDefinition::create('integer')
       ->setLabel(t('Borger.dk ID'))
@@ -195,6 +211,22 @@ class BorgerdkArticle extends BorgerdkContent implements BorgerdkArticleInterfac
       ->setLabel(t('Municipality code'))
       ->setDescription(t('The code of the municipality which this Borger.dk article was imported from.'))
       ->setDefaultValue(0);
+
+    // PostText field.
+    $fields['post_text'] = BaseFieldDefinition::create('text_long')
+      ->setLabel(t('Tekst i bunden'))
+      ->setDescription(t('Tekst i bunden af Borger.dk artikkel'))
+      ->setDisplayOptions('form', [
+        'type' => 'text_textarea',
+        'weight' => 10,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayOptions('view', [
+        'type' => 'text_default',
+        'label' => 'above',
+        'weight' => 10,
+      ])
+      ->setDisplayConfigurable('view', TRUE);
 
     return $fields;
   }

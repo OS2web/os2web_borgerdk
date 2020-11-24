@@ -10,4 +10,5 @@ dependencies:
   - migrate_plus
   - migrate_tools
   - paragraphs
+  - svg_image
 configure: os2web_borgerdk.settings_form
