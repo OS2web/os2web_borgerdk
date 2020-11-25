@@ -105,7 +105,7 @@ function os2web_borgerdk_update_8002() {
 function os2web_borgerdk_update_8003() {
   $storage_definition = BaseFieldDefinition::create('text_long')
     ->setLabel(t('Description'))
-    ->setDescription(t('The description of the self-service.'))
+    ->setDescription(t('The description of the selfservice.'))
     ->setDisplayOptions('form', [
       'type' => 'text_textarea',
       'weight' => 1,
@@ -321,8 +321,8 @@ function os2web_borgerdk_update_8007() {
 function os2web_borgerdk_update_8008() {
   // Adding text on the top.
   $storage_definition = BaseFieldDefinition::create('text_long')
-    ->setLabel(t('Tekst i toppen'))
-    ->setDescription(t('Tekst i toppen af Borger.dk artikkel'))
+    ->setLabel(t('Pre-text'))
+    ->setDescription(t('Text on the top of Borger.dk article'))
     ->setDisplayOptions('form', [
       'type' => 'text_textarea',
       'weight' => -1,
@@ -340,8 +340,8 @@ function os2web_borgerdk_update_8008() {
 
   // Adding text on the bottom.
   $storage_definition = BaseFieldDefinition::create('text_long')
-    ->setLabel(t('Tekst i bunden'))
-    ->setDescription(t('Tekst i bunden af Borger.dk artikkel'))
+    ->setLabel(t('Post-text'))
+    ->setDescription(t('Text on the bottom of Borger.dk article'))
     ->setDisplayOptions('form', [
       'type' => 'text_textarea',
       'weight' => 10,

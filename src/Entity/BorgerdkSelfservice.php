@@ -63,7 +63,7 @@ class BorgerdkSelfservice extends BorgerdkContent implements BorgerdkSelfservice
     // Borger.dk - Selfservice label field.
     $fields['label'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Label'))
-      ->setDescription(t('The label the self-service, taken from Borger.dk.'))
+      ->setDescription(t('The label the selfservice, taken from Borger.dk.'))
       ->setSetting('max_length', 255)
       ->setDisplayOptions('form', [
         'type' => 'string_textfield',
@@ -80,7 +80,7 @@ class BorgerdkSelfservice extends BorgerdkContent implements BorgerdkSelfservice
     // Borger.dk - Selfservice URL field.
     $fields['selfserviceUrl'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Selfservice URL'))
-      ->setDescription(t('The URL of the self-service, taken from Borger.dk.'))
+      ->setDescription(t('The URL of the selfservice, taken from Borger.dk.'))
       ->setSetting('max_length', 255)
       ->setDisplayOptions('form', [
         'type' => 'string_textfield',
@@ -97,7 +97,7 @@ class BorgerdkSelfservice extends BorgerdkContent implements BorgerdkSelfservice
     // Selfservice description field.
     $fields['description'] = BaseFieldDefinition::create('text_long')
       ->setLabel(t('Description'))
-      ->setDescription(t('The description of the self-service.'))
+      ->setDescription(t('The description of the selfservice.'))
       ->setDisplayOptions('form', [
         'type' => 'text_textarea',
         'weight' => 1,

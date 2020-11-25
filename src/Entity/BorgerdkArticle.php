@@ -56,8 +56,8 @@ class BorgerdkArticle extends BorgerdkContent implements BorgerdkArticleInterfac
 
     // PreText
     $fields['pre_text'] = BaseFieldDefinition::create('text_long')
-      ->setLabel(t('Tekst i toppen'))
-      ->setDescription(t('Tekst i toppen af Borger.dk artikkel'))
+      ->setLabel(t('Pre-text'))
+      ->setDescription(t('Text on the top of Borger.dk article'))
       ->setDisplayOptions('form', [
         'type' => 'text_textarea',
         'weight' => -1,
@@ -214,8 +214,8 @@ class BorgerdkArticle extends BorgerdkContent implements BorgerdkArticleInterfac
 
     // PostText field.
     $fields['post_text'] = BaseFieldDefinition::create('text_long')
-      ->setLabel(t('Tekst i bunden'))
-      ->setDescription(t('Tekst i bunden af Borger.dk artikkel'))
+      ->setLabel(t('Post-text'))
+      ->setDescription(t('Text on the bottom of Borger.dk article'))
       ->setDisplayOptions('form', [
         'type' => 'text_textarea',
         'weight' => 10,

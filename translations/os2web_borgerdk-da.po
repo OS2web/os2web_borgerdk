@@ -1,0 +1,132 @@
+# Danish translation of OS2Web Search (8.x)
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OS2Web Search (8.x)\n"
+"POT-Creation-Date: 2020-11-24 11:00+0000\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Language-Team: Danish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n>1);\n"
+
+msgid "Borger.dk article"
+msgstr "Borger.dk artikel"
+
+msgid "Add Borger.dk article"
+msgstr "Opret Borger.dk artikel"
+
+msgid "Borger.dk Articles"
+msgstr "Borger.dk artikler"
+
+msgid "Borger.dk microarticle"
+msgstr "Borger.dk mikroartikel"
+
+msgid "Add Borger.dk microarticle"
+msgstr "Opret Borger.dk mikroartikel"
+
+msgid "Borger.dk microarticles"
+msgstr "Borger.dk mikroartikler"
+
+msgid "Borger.dk selfservice"
+msgstr "Borger.dk selvbetjening"
+
+msgid "Add Borger.dk selfservice"
+msgstr "Opret Borger.dk selvbetjening"
+
+msgid "Borger.dk selfservices"
+msgstr "Borger.dk selvbetjeninger"
+
+msgid "Title"
+msgstr "Titel"
+
+msgid "Language (Borger.dk source)"
+msgstr "Sprog (Borger.dk kilde)"
+
+msgid "Article URL"
+msgstr "Artikel URL"
+
+msgid "Pre-text"
+msgstr "Tekst i toppen"
+
+msgid "Text on the top of Borger.dk article"
+msgstr "Tekst i toppen af Borger.dk artikel"
+
+msgid "The title of the Borger.dk content entity."
+msgstr "Titlen på Borger.dk-indholdsenheden."
+
+msgid "A header for the item, taken from Borger.dk."
+msgstr "Et overskrift til artiklen, fra Borger.dk."
+
+msgid "The URL of the article, taken from Borger.dk."
+msgstr "URL'en til artiklen, fra Borger.dk."
+
+msgid "The byline of the article, taken from Borger.dk."
+msgstr "Artiklens byline, fra Borger.dk."
+
+msgid "Legislation"
+msgstr "Lovgivning"
+
+msgid "Legislation section of article, taken from Borger.dk."
+msgstr "Lovgivningssektion af artiklen, fra Borger.dk."
+
+msgid "Recommendation"
+msgstr "Anbefaling"
+
+msgid "Recommendation section of article, taken from Borger.dk."
+msgstr "Anbefalingsafsnit af artiklen, hentet fra Borger.dk."
+
+msgid "Microarticles"
+msgstr "Mikroartikler"
+
+msgid "Borger.dk microarticles"
+msgstr "Borger.dk mikroartikler"
+
+msgid "Selfservices"
+msgstr "Selvbetjening"
+
+msgid "Borger.dk selfservices"
+msgstr "Borger.dk selvbetjening"
+
+msgid "Published"
+msgstr "Udgivet"
+
+msgid "A boolean indicating whether the Borger.dk content is published."
+msgstr "En boolsk indikation af, om Borger.dk-indholdet er offentliggjort eller ej."
+
+msgid "Post-text"
+msgstr "Tekst i bunden"
+
+msgid "Text on the bottom of Borger.dk article"
+msgstr "Tekst i bunden af Borger.dk artikel"
+
+msgid "Content"
+msgstr "Indhold"
+
+msgid "Content of the microarticle, taken from Borger.dk."
+msgstr "Indholdet af mikroartiklen, fra Borger.dk."
+
+msgid "Label"
+msgstr "Etiket"
+
+msgid "The label the selfservice, taken from Borger.dk."
+msgstr "Etiketten selvbetjeningen, fra Borger.dk."
+
+msgid "Selfservice URL"
+msgstr "Selvbetjening URL"
+
+msgid "The URL of the selfservice, taken from Borger.dk."
+msgstr "URL'en til selvbetjeningen, fra Borger.dk."
+
+msgid "Description"
+msgstr "Beskrivelse"
+
+msgid "The description of the selfservice."
+msgstr "Beskrivelsen af selvbetjeningen."
+
+msgid "Category"
+msgstr "Kategori"
+
+msgid "Borger.dk selfservice category"
+msgstr "Borger.dk selvbetjeningskategori"

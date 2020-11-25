@@ -32,6 +32,13 @@ Module is available to download via composer.
 composer require os2web/os2web_borgerdk
 drush en os2web_borgerdk
 ```
+## Update
+Updating process for OS2Web Borger.dk module is similar to usual Drupal 8 module.
+Use Composer's built-in command for listing packages that have updates available:
+
+```
+composer outdated os2web/os2web_borgerdk
+```
 
 ## Import process
 
@@ -49,13 +56,13 @@ The import process can be done in two ways:
     * Click ```Execute```
     * Click ```Execute``` on the next page as well (doing that will use default options).
 
+## Module translation
+Module's main language is English but Danish language is fully supported.
 
-## Update
-Updating process for OS2Web Borger.dk module is similar to usual Drupal 8 module.
-Use Composer's built-in command for listing packages that have updates available:
-
+When extending this module add your translations to the corresponding **\*.po** files located ```modules/contrib/os2web_borgerdk/translations/``` and run the following to update translations:
 ```
-composer outdated os2web/os2web_borgerdk
+drush locale-check
+drush locale-update && drush cr
 ```
 
 ## Automated testing and code quality

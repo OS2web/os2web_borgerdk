@@ -12,3 +12,5 @@ dependencies:
   - paragraphs
   - svg_image
 configure: os2web_borgerdk.settings_form
+'interface translation project': os2web_borgerdk
+'interface translation server pattern': modules/contrib/os2web_borgerdk/translations/os2web_borgerdk-%language.po
