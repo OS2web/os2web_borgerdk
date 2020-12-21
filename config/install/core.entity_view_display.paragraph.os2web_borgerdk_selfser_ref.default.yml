@@ -1,10 +1,11 @@
-langcode: en
+langcode: da
 status: true
 dependencies:
   config:
     - field.field.paragraph.os2web_borgerdk_selfser_ref.field_os2web_bdk_selfser_ref
     - field.field.paragraph.os2web_borgerdk_selfser_ref.field_os2web_bdk_selfser_ref_h
     - field.field.paragraph.os2web_borgerdk_selfser_ref.field_os2web_bdk_selfser_ref_sh
+    - field.field.paragraph.os2web_borgerdk_selfser_ref.field_os2web_bdk_selfser_ref_vmo
     - paragraphs.paragraphs_type.os2web_borgerdk_selfser_ref
   enforced:
     module:
@@ -38,4 +39,5 @@ content:
     third_party_settings: {  }
     type: basic_string
     region: content
-hidden: {  }
+hidden:
+  field_os2web_bdk_selfser_ref_vmo: true

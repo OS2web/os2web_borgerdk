@@ -1,0 +1,25 @@
+{#
+/**
+ * @file
+ * Default theme implementation to present a borger.dk selfservice entity.
+ *
+ * This template is used when viewing a registered borger.dk selfservice's page,
+ * e.g., /admin/content/os2web-borgerdk-selfservice)/123. 123 being the borger.dk selfservice's ID.
+ *
+ * Available variables:
+ * - content: A list of content items. Use 'content' to print all content, or
+ *   print a subset such as 'content.title'.
+ * - attributes: HTML attributes for the container element.
+ * - view_mode: View mode; for example, "teaser" or "field_reference".
+ *
+ * @see template_preprocess_os2web_borgerdk_selfservice()
+ */
+#}
+{% set entity = elements['#os2web_borgerdk_selfservice'] %}
+
+<article{{ attributes }}>
+  <a target="_blank" href="{{ entity.selfserviceUrl.value }}" title="{{ entity.label.value }}">
+    {{ content.title }}
+    {{ content.description }}
+  </a>
+</article>

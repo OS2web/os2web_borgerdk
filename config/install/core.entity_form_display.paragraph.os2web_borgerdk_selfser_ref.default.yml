@@ -1,10 +1,11 @@
-langcode: en
+langcode: da
 status: true
 dependencies:
   config:
     - field.field.paragraph.os2web_borgerdk_selfser_ref.field_os2web_bdk_selfser_ref
     - field.field.paragraph.os2web_borgerdk_selfser_ref.field_os2web_bdk_selfser_ref_h
     - field.field.paragraph.os2web_borgerdk_selfser_ref.field_os2web_bdk_selfser_ref_sh
+    - field.field.paragraph.os2web_borgerdk_selfser_ref.field_os2web_bdk_selfser_ref_vmo
     - paragraphs.paragraphs_type.os2web_borgerdk_selfser_ref
   enforced:
     module:
@@ -15,7 +16,7 @@ bundle: os2web_borgerdk_selfser_ref
 mode: default
 content:
   field_os2web_bdk_selfser_ref:
-    weight: 2
+    weight: 3
     settings:
       match_operator: CONTAINS
       match_limit: 10
@@ -39,6 +40,12 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textarea
+    region: content
+  field_os2web_bdk_selfser_ref_vmo:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
     region: content
 hidden:
   created: true
