@@ -54,6 +54,18 @@ class SettingsForm extends ConfigFormBase {
       '#default_value' => $this->config(SettingsForm::$configName)->get('selected_municipality'),
     ];
 
+    $form['sync_detail']['import_sources'] = [
+      '#type' => 'checkboxes',
+      '#title' => t('Fetch content from the selected sources'),
+      '#options' => [
+        'da' => 'Borger.dk',
+        'en' => 'Lifeindenmark.borger.dk',
+      ],
+      '#required' => TRUE,
+      '#description' => t('Only content from these sources will be imported'),
+      '#default_value' => $this->config(SettingsForm::$configName)->get('import_sources'),
+    ];
+
     // Obsolete articles notification.
     $form['notification_details'] = [
       '#type' => 'details',
@@ -125,6 +137,7 @@ class SettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->config(SettingsForm::$configName)
       ->set('selected_municipality', $form_state->getValue('selected_municipality'))
+      ->set('import_sources', $form_state->getValue('import_sources'))
       ->set('obsolete_notification_enabled', $form_state->getValue('obsolete_notification_enabled'))
       ->set('obsolete_notification_recipients', $form_state->getValue('obsolete_notification_recipients'))
       ->set('obsolete_notification_email_subject', $form_state->getValue('obsolete_notification_email_subject'))

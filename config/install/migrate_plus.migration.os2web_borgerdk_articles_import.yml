@@ -6,9 +6,6 @@ migration_group: os2web_borgerdk
 source:
   plugin: os2web_borgerdk_article
   track_changes: true
-  source_languages:
-    - da
-    - en
 process:
   borgerdk_id: id
   title: title

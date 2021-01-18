@@ -8,6 +8,7 @@
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\field\Entity\FieldConfig;
+use Drupal\os2web_borgerdk\Form\SettingsForm;
 use Drupal\user\Entity\Role;
 
 /**
@@ -356,6 +357,15 @@ function os2web_borgerdk_update_8008() {
 
   \Drupal::entityDefinitionUpdateManager()
     ->installFieldStorageDefinition('post_text', 'os2web_borgerdk_article', 'os2web_borgerdk_article', $storage_definition);
+}
+
+/**
+ * Implements hook_update_N().
+ *
+ * Import sources update. Removing failing import source.
+ */
+function os2web_borgerdk_update_8009() {
+  \Drupal::configFactory()->getEditable(SettingsForm::$configName)->set('import_sources', ['da' => 'da'])->save();
 }
 
 

@@ -43,6 +43,13 @@ class BorgerdkArticleSource extends SourcePluginBase implements ConfigurableInte
   protected $importClients = [];
 
   /**
+   * Holds Borger.dk articles source languages that are allowed to be imported.
+   *
+   * @var array
+   */
+  protected $importSources = [];
+
+  /**
    * {@inheritdoc}
    *
    * @throws \InvalidArgumentException
@@ -52,15 +59,17 @@ class BorgerdkArticleSource extends SourcePluginBase implements ConfigurableInte
     parent::__construct($configuration, $plugin_id, $plugin_definition, $migration);
     $this->setConfiguration($configuration);
 
-    // Language is required.
-    if (empty($this->configuration['source_languages']) || !is_array($this->configuration['source_languages'])) {
-      throw new \InvalidArgumentException('You must have at least one language "da" or "en".');
-    }
-    // Checking language is valid.
-    foreach ($this->configuration['source_languages'] as $lang) {
-      if (!in_array($lang, ['da', 'en'])) {
-        throw new \InvalidArgumentException('Allowed values are only "da" or "en".');
+    $settings = \Drupal::config(SettingsForm::$configName);
+
+    // Import sources.
+    foreach ($settings->get('import_sources') as $source => $sourceValue) {
+      if ($sourceValue) {
+        $this->importSources[] = $source;
       }
+    }
+
+    if (empty($this->importSources)) {
+      throw new \InvalidArgumentException('You must have at least one language "da" or "en".');
     }
 
     // Initializing obsolete articles. At the beginning we treat all anonymously
@@ -115,7 +124,7 @@ class BorgerdkArticleSource extends SourcePluginBase implements ConfigurableInte
   protected function initializeIterator() {
     $articles = [];
 
-    foreach ($this->configuration['source_languages'] as $lang) {
+    foreach ($this->importSources as $lang) {
       $importClient = $this->getImportClient($lang);
       $articles_raw = new GetAllArticles($importClient);
 
@@ -357,7 +366,6 @@ class BorgerdkArticleSource extends SourcePluginBase implements ConfigurableInte
    */
   protected function processObsoleteArticles() {
     if (!empty($this->borgerdkObsoleteArticleIds)) {
-      print_r($this->borgerdkObsoleteArticleIds);
       foreach ($this->borgerdkObsoleteArticleIds as $article_borgerdk_id => $article_id) {
         // Ignore the article if we don't have Borger.dk ID.
         if (!$article_borgerdk_id) {
