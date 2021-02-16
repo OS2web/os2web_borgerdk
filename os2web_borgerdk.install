@@ -298,7 +298,7 @@ function os2web_borgerdk_update_8007() {
       'type' => 'string',
       'weight' => -20,
     ])
-    ->setDisplayConfigurable('view', TRUE);;
+    ->setDisplayConfigurable('view', TRUE);
 
   // Install the new definition.
   $definition_manager->installFieldStorageDefinition('title', $bundle_of, $bundle_of, $new_title_field);
@@ -366,6 +366,24 @@ function os2web_borgerdk_update_8008() {
  */
 function os2web_borgerdk_update_8009() {
   \Drupal::configFactory()->getEditable(SettingsForm::$configName)->set('import_sources', ['da' => 'da'])->save();
+}
+
+/**
+ * Implements hook_update_N().
+ *
+ * Fixing os2web_borgerdk_selfservice title field provider.
+ */
+function os2web_borgerdk_update_8010() {
+  $bundle_of = 'os2web_borgerdk_selfservice';
+  $definition_manager = \Drupal::entityDefinitionUpdateManager();
+
+  $field_storage_definition = $definition_manager-> getFieldStorageDefinition('title', $bundle_of);
+
+  // Updating provider.
+  $field_storage_definition->setProvider('os2web_borgerdk');
+
+  // Install the new definition.
+  $definition_manager->updateFieldStorageDefinition($field_storage_definition);
 }
 
 
