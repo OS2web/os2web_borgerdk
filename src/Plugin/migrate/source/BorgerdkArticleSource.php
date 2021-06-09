@@ -4,7 +4,7 @@ namespace Drupal\os2web_borgerdk\Plugin\migrate\source;
 
 use BorgerDk\ArticleService\Client as ImportClient;
 use BorgerDk\ArticleService\Resources\Endpoints\GetAllArticles;
-use BorgerDk\ArticleService\Resources\Endpoints\GetArticlesByIDs;
+use Drupal\os2web_borgerdk\BorgerDk\ArticleService\Resources\Endpoints\GetArticlesByIDs;
 use Drupal\Component\Plugin\ConfigurableInterface;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\migrate\Plugin\migrate\source\SourcePluginBase;
