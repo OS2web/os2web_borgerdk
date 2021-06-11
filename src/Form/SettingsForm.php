@@ -66,6 +66,14 @@ class SettingsForm extends ConfigFormBase {
       '#default_value' => $this->config(SettingsForm::$configName)->get('import_sources'),
     ];
 
+    $form['sync_detail']['replacements'] = [
+      '#type' => 'textarea',
+      '#title' => t('List with replacements'),
+      '#required' => TRUE,
+      '#description' => t('Add replacements for imported content. One per each line. Example: replace_from|replace_to'),
+      '#default_value' => $this->config(SettingsForm::$configName)->get('replacements'),
+    ];
+
     // Obsolete articles notification.
     $form['notification_details'] = [
       '#type' => 'details',
@@ -138,6 +146,7 @@ class SettingsForm extends ConfigFormBase {
     $this->config(SettingsForm::$configName)
       ->set('selected_municipality', $form_state->getValue('selected_municipality'))
       ->set('import_sources', $form_state->getValue('import_sources'))
+      ->set('replacements', $form_state->getValue('replacements'))
       ->set('obsolete_notification_enabled', $form_state->getValue('obsolete_notification_enabled'))
       ->set('obsolete_notification_recipients', $form_state->getValue('obsolete_notification_recipients'))
       ->set('obsolete_notification_email_subject', $form_state->getValue('obsolete_notification_email_subject'))

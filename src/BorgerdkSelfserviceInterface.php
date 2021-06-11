@@ -16,6 +16,14 @@ interface BorgerdkSelfserviceInterface extends BorgerdkContentInterface {
   public function getUrl();
 
   /**
+   * Gets the borger.dk selfservice label.
+   *
+   * @return string
+   *   Label of the borger.dk selfservice.
+   */
+  public function getLabel();
+
+  /**
    * Gets the Borger.dk parent article.
    *
    * @param bool $load

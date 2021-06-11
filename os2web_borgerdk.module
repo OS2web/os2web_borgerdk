@@ -78,6 +78,23 @@ function template_preprocess_os2web_borgerdk_microarticle(array &$variables) {
     $variables['content'][$key] = $variables['elements'][$key];
   }
   $variables['view_mode'] = $variables['elements']['#view_mode'];
+
+  if ($variables['view_mode'] == 'field_reference') {
+    /** @var \Drupal\os2web_borgerdk\Entity\BorgerdkMicroarticle $microarticle */
+    $microarticle = $variables['elements']['#os2web_borgerdk_microarticle'];
+
+    $selfservices = $microarticle->getSelfservices();
+    $variables['content']['selfservices'] = [];
+
+    /** @var \Drupal\os2web_borgerdk\Entity\BorgerdkSelfservice $selfservice */
+    foreach ($selfservices as $selfservice) {
+      $variables['#selfservices'][] = [
+        'title' => $selfservice->getTitle(),
+        'label' => $selfservice->getLabel(),
+        'url' => $selfservice->getUrl(),
+      ];
+    }
+  }
 }
 
 /**

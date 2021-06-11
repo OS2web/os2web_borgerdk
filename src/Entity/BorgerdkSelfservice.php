@@ -146,6 +146,13 @@ class BorgerdkSelfservice extends BorgerdkContent implements BorgerdkSelfservice
   }
 
   /**
+   * @inheritDoc
+   */
+  public function getLabel() {
+    return $this->get('label')->value;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function getArticle($load = TRUE) {
