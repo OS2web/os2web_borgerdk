@@ -39,19 +39,23 @@ class BorgerdkArticleReferenceFormatter extends EntityReferenceEntityFormatter {
 
     $renderedArticles = parent::viewElements($items, $langcode);
 
+    /** @var \Drupal\os2web_borgerdk\Plugin\Field\FieldType\BorgerdkArticleReference $item */
     foreach ($items as $delta => $item) {
-      /** @var \Drupal\os2web_borgerdk\Plugin\Field\FieldType\BorgerdkArticleReference $item */
-      $elements[$delta]['article'] = $renderedArticles[$delta];
+      if (isset($renderedArticles[$delta])) {
+        $elements[$delta]['article'] = $renderedArticles[$delta];
+      }
 
       $article_view_builder = \Drupal::entityTypeManager()
         ->getViewBuilder('os2web_borgerdk_article');
 
       $article = $item->getArticleValue(TRUE);
-      $elements[$delta]['pre_text'] = $article_view_builder->viewField($article->pre_text);
-      $elements[$delta]['legislation'] = $article_view_builder->viewField($article->legislation);
-      $elements[$delta]['recommendation'] = $article_view_builder->viewField($article->recommendation);
-      $elements[$delta]['byline'] = $article_view_builder->viewField($article->byline);
-      $elements[$delta]['post_text'] = $article_view_builder->viewField($article->post_text);
+      if ($article) {
+        $elements[$delta]['pre_text'] = $article_view_builder->viewField($article->pre_text);
+        $elements[$delta]['legislation'] = $article_view_builder->viewField($article->legislation);
+        $elements[$delta]['recommendation'] = $article_view_builder->viewField($article->recommendation);
+        $elements[$delta]['byline'] = $article_view_builder->viewField($article->byline);
+        $elements[$delta]['post_text'] = $article_view_builder->viewField($article->post_text);
+      }
 
       $selectedMicroarticleIds = $item->getMicroarticleIdsValue();
       if (!empty($selectedMicroarticleIds)) {

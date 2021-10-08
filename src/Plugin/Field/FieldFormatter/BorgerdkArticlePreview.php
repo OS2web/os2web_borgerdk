@@ -38,9 +38,12 @@ class BorgerdkArticlePreview extends EntityReferenceEntityFormatter {
     foreach ($items as $delta => $item) {
       /** @var \Drupal\os2web_borgerdk\Plugin\Field\FieldType\BorgerdkArticleReference $item */
       $article = $item->getArticleValue(TRUE);
-      $elements[$delta]['article'] = [
-        '#markup' => $article->label(),
-      ];
+
+      if ($article) {
+        $elements[$delta]['article'] = [
+          '#markup' => $article->label(),
+        ];
+      }
     }
 
     return $elements;
