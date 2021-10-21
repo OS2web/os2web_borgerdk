@@ -69,7 +69,6 @@ class SettingsForm extends ConfigFormBase {
     $form['sync_detail']['replacements'] = [
       '#type' => 'textarea',
       '#title' => t('List with replacements'),
-      '#required' => TRUE,
       '#description' => t('Add replacements for imported content. One per each line. Example: replace_from|replace_to'),
       '#default_value' => $this->config(SettingsForm::$configName)->get('replacements'),
     ];

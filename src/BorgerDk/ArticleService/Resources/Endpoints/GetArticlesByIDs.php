@@ -22,11 +22,13 @@ class GetArticlesByIDs extends BaseGetArticlesByIDs {
   protected $config;
 
   /**
-   * {@inheritdoc }
+   * {@inheritdoc}
    */
   public function formatSingleArticle($article) {
-    foreach ($this->getReplacements() as $replace_from => $replace_to) {
-      $article->Content = str_replace($replace_from, $replace_to, $article->Content);
+    if (!empty($this->getReplacements())) {
+      foreach ($this->getReplacements() as $replace_from => $replace_to) {
+        $article->Content = str_replace($replace_from, $replace_to, $article->Content);
+      }
     }
     return parent::formatSingleArticle($article);
   }
@@ -74,4 +76,5 @@ class GetArticlesByIDs extends BaseGetArticlesByIDs {
 
     return $values;
   }
+
 }
