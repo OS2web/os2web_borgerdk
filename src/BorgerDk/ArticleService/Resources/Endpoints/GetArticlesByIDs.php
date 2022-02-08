@@ -25,6 +25,9 @@ class GetArticlesByIDs extends BaseGetArticlesByIDs {
    * {@inheritdoc}
    */
   public function formatSingleArticle($article) {
+    // Removing style tag.
+    $article->Content = preg_replace("/<style>(.*)<\/style>/sU", '', $article->Content);
+
     if (!empty($this->getReplacements())) {
       foreach ($this->getReplacements() as $replace_from => $replace_to) {
         $article->Content = str_replace($replace_from, $replace_to, $article->Content);
