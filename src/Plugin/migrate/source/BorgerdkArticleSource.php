@@ -375,6 +375,10 @@ class BorgerdkArticleSource extends SourcePluginBase implements ConfigurableInte
         /** @var \Drupal\os2web_borgerdk\BorgerdkArticleInterface $article */
         $article = BorgerdkArticle::load($article_id);
 
+        if (!$article) {
+          continue;
+        }
+
         // Check if we want to send notifications.
         if (\Drupal::config(SettingsForm::$configName)->get('obsolete_notification_enabled')) {
           $affectedEntities = $this->getAffectedEntities($article);
