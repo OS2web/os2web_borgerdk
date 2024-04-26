@@ -428,6 +428,7 @@ class BorgerdkArticleSource extends SourcePluginBase implements ConfigurableInte
     foreach ($fieldMap as $entityType => $fieldUsages) {
       foreach ($fieldUsages as $fieldName => $fieldUsage) {
         $ids = \Drupal::entityQuery($entityType)
+          ->accessCheck(false)
           ->condition($fieldName, $article->id())->execute();
 
         if (!empty($ids)) {

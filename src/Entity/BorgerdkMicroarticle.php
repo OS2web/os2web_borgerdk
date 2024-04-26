@@ -111,6 +111,7 @@ class BorgerdkMicroarticle extends BorgerdkContent implements BorgerdkMicroartic
    */
   public function getArticle($load = TRUE) {
     $query = \Drupal::entityQuery('node')
+      ->accessCheck(FALSE)
       ->condition('type', 'os2web_borgerdk_article')
       ->condition('os2web_borgerdk_microarticles', $this->id());
 
