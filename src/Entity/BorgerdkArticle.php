@@ -240,6 +240,7 @@ class BorgerdkArticle extends BorgerdkContent implements BorgerdkArticleInterfac
 
       if (!empty($microarticleIds)) {
         $query = \Drupal::entityQuery('os2web_borgerdk_microarticle')
+          ->accessCheck(false)
           ->condition('id', $microarticleIds, 'IN');
 
         $query = $this->addQueryConditions($query, $conditionParams);
@@ -272,6 +273,7 @@ class BorgerdkArticle extends BorgerdkContent implements BorgerdkArticleInterfac
 
       if (!empty($selfserviceIds)) {
         $query = \Drupal::entityQuery('os2web_borgerdk_selfservice')
+          ->accessCheck(FALSE)
           ->condition('id', $selfserviceIds, 'IN');
 
         $query = $this->addQueryConditions($query, $conditionParams);

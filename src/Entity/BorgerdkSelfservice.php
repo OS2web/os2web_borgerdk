@@ -157,6 +157,7 @@ class BorgerdkSelfservice extends BorgerdkContent implements BorgerdkSelfservice
    */
   public function getArticle($load = TRUE) {
     $query = \Drupal::entityQuery('node')
+      ->accessCheck(false)
       ->condition('type', 'os2web_borgerdk_article')
       ->condition('os2web_borgerdk_selfservices', $this->id());
 
