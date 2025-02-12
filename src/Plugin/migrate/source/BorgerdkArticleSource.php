@@ -185,8 +185,12 @@ class BorgerdkArticleSource extends SourcePluginBase implements ConfigurableInte
 
       // Filling row simple fields.
       $row->setSourceProperty('header', $articleFormatted->header);
-      $row->setSourceProperty('legislation', $articleFormatted->legislation->content);
-      $row->setSourceProperty('recommendation', $articleFormatted->recommendation->content);
+      if (isset($articleFormatted->legislation)) {
+        $row->setSourceProperty('legislation', $articleFormatted->legislation->content);
+      }
+      if (isset($articleFormatted->recommendation)) {
+        $row->setSourceProperty('recommendation', $articleFormatted->recommendation->content);
+      }
       $row->setSourceProperty('byline', $articleFormatted->byline);
 
       // Getting previously imported microarticles and selfservices.
