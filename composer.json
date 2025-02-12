@@ -7,8 +7,8 @@
     "license": "EUPL-1.2",
     "require": {
         "ffwagency/borgerdk-php": "dev-develop",
-        "drupal/migrate_plus": "^6",
-        "drupal/migrate_tools": "^6.0.4",
+        "drupal/migrate_plus": "^5.1 || ^6",
+        "drupal/migrate_tools": "^5.0 || ^6.0.4",
         "drupal/paragraphs": "^1.11"
     }
 }
