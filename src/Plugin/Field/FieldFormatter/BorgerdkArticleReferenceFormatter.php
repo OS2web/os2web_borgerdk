@@ -47,6 +47,10 @@ class BorgerdkArticleReferenceFormatter extends EntityReferenceEntityFormatter {
         ->getViewBuilder('os2web_borgerdk_article');
 
       $article = $item->getArticleValue(TRUE);
+      if (!$article) {
+        return $elements;
+      }
+
       $elements[$delta]['pre_text'] = $article_view_builder->viewField($article->pre_text);
       $elements[$delta]['legislation'] = $article_view_builder->viewField($article->legislation);
       $elements[$delta]['recommendation'] = $article_view_builder->viewField($article->recommendation);

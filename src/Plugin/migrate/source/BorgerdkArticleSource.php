@@ -362,7 +362,7 @@ class BorgerdkArticleSource extends SourcePluginBase implements ConfigurableInte
    * When article is deleted from a source but still present in the local
    * version, it makes it obsolete.
    * Obsolete articles need to notify the related nodes' authors (if the
-   * setting is on), and eventually be deleted.
+   * setting is on).
    */
   protected function processObsoleteArticles() {
     if (!empty($this->borgerdkObsoleteArticleIds)) {
@@ -383,9 +383,6 @@ class BorgerdkArticleSource extends SourcePluginBase implements ConfigurableInte
             $this->sendObsoleteEntitiesEmail($article, $affectedEntities);
           }
         }
-
-        // Finally delete the article.
-        $article->delete();
       }
     }
   }
