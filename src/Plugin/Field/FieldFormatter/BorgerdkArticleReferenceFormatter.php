@@ -49,13 +49,15 @@ class BorgerdkArticleReferenceFormatter extends EntityReferenceEntityFormatter {
         ->getViewBuilder('os2web_borgerdk_article');
 
       $article = $item->getArticleValue(TRUE);
-      if ($article) {
-        $elements[$delta]['pre_text'] = $article_view_builder->viewField($article->pre_text);
-        $elements[$delta]['legislation'] = $article_view_builder->viewField($article->legislation);
-        $elements[$delta]['recommendation'] = $article_view_builder->viewField($article->recommendation);
-        $elements[$delta]['byline'] = $article_view_builder->viewField($article->byline);
-        $elements[$delta]['post_text'] = $article_view_builder->viewField($article->post_text);
+      if (!$article) {
+        return $elements;
       }
+
+      $elements[$delta]['pre_text'] = $article_view_builder->viewField($article->pre_text);
+      $elements[$delta]['legislation'] = $article_view_builder->viewField($article->legislation);
+      $elements[$delta]['recommendation'] = $article_view_builder->viewField($article->recommendation);
+      $elements[$delta]['byline'] = $article_view_builder->viewField($article->byline);
+      $elements[$delta]['post_text'] = $article_view_builder->viewField($article->post_text);
 
       $selectedMicroarticleIds = $item->getMicroarticleIdsValue();
       if (!empty($selectedMicroarticleIds)) {
